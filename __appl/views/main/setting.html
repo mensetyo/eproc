@@ -1,0 +1,143 @@
+
+<form class="" id="form_input_{$acak}" url="{$host}bo/cruddata/setting" method="post" enctype="multipart/form-data">
+	<div class="box box-primary">
+		<div class="box-header with-border">
+		  <h3 class="box-title">Setting Brand Form</h3>
+		</div>
+		
+		<div class="box-body">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="exampleFormControlInput1">Nama Klien</label>
+						<input type="text" class="form-control" name="nama_klien" id="exampleFormControlInput1" value="{$data.nama_klien|default:''}">
+					 </div>
+				 </div>
+				 <div class="col-md-6">
+					<div class="form-group">
+						<label for="exampleFormControlInput1">Judul Survey</label>
+						<input type="text" class="form-control" name="judul_survey" value="{$data.judul_survey|default:''}">
+					 </div>
+				 </div>
+			 </div>
+			 <div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="exampleFormControlInput1">Logo Klien</label>
+						<input type="file" name="logo" />
+						<br/>
+						{if $data.logo|default:''}
+							<img src="{$host}__assets/img/{$data.logo|default:''}" width="100px" height="100px" />
+						{/if}
+					 </div>
+				</div>
+			 </div>
+			 <div class="control-group">
+				<center>
+				<label class="control-label" for="form-field-1"></label>
+				<div class="controls">
+					{include file="template/button_save.html" id_simpan="simpan_input" id_batal="batal_input" text_simpan="Simpan Setting" text_batal="Reset" }
+				</div>
+				</center>
+			</div>
+		</div>
+	</div>
+</form>
+
+<script>
+	$('#simpan_input').click(function(){
+		submit_form('form_input_{$acak}',function(resp){
+			if(resp==1){
+				$.messager.alert('Survey',"Setting Brand Survey Tersimpan",'info');
+				setTimeout(function(){ 
+					loadUrl(host+'bo/get_konten/setting');$('#judul_kecil').html('Setting Brand Survey')
+				}, 3000);
+			}else{
+				$.messager.alert('Survey',"Data Gagal Tersimpan",'error');
+				console.log(resp);
+			}
+		});
+
+	});
+</script>
+
+
+
+{*
+<form class="form-horizontal" id="form_input_{$acak}" url="{$host}bo/cruddata/seting" method="post" enctype="multipart/form-data">
+<div class="col-md-12">
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">Pilih Hasil Survey Yang Akan Ditampilkan</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+		<table class="table table-hover">
+			<thead>
+			<tr style="background:#e6e6ff;font-weight:bold;">
+				<td style="text-align:center;">No.</td>
+				<td>Pertanyaan Survey</td>
+				<td>Judul Dashboard</td>
+				<td>Type Chart</td>
+				<td>Status</td>
+			</tr>
+			</thead>
+			<tbody>
+				{foreach from=$data item=i name=x key=k}
+				<tr>
+					<td style="text-align:center;">{$smarty.foreach.x.iteration}</td>
+					<td>{$i.pertanyaan|default:'-'}</td>
+					<td style="text-align:right;">
+						<input type="hidden" name="tbl_pertanyaan_id[]" class="form-control" value="{$i.id}">
+						<input type="text" name="judul[]" class="form-control" value="{if $i.judul != ""}{$i.judul}{/if}">
+					</td>
+					<td style="text-align:right;">
+						<select name="jenis_chart[]" class="form-control">
+							<option value="">-- Pilih --</option>
+							<option value="column" {if $i.jenis_chart eq "column"}selected{/if}>Column</option>
+							<option value="pie" {if $i.jenis_chart eq "pie"}selected{/if}>Pie</option>
+							<!--option value="line" {if $i.jenis_chart eq "line"}selected{/if}>Line</option-->
+						</select>
+					</td>
+					<td style="text-align:right;">
+						<select name="flag[]" class="form-control">
+							<option value="Y" {if $i.flag eq "Y"}selected{/if}>Aktif</option>
+							<option value="N" {if $i.flag eq "N" || $i.flag eq ""}selected{/if}>Tidak Aktif</option>
+						</select>
+					</td>
+				</tr>
+				{/foreach}
+			</tbody>
+		</table>
+    </div>
+    <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
+</div>
+<div class="control-group">
+	<center>
+	<label class="control-label" for="form-field-1"></label>
+	<div class="controls">
+		{include file="template/button_save.html" id_simpan="simpan_input" id_batal="batal_input" text_simpan="Simpan Seting Dashboard" text_batal="Reset" }
+		<!--a href="javascript:void(0);" id="edit_input" class="btn btn-small btn-info">
+			Lihat Data & Edit
+		</a-->
+	</div>
+	</center>
+</div>
+</form>
+<script>
+	$('#simpan_input').click(function(){
+		submit_form('form_input_{$acak}',function(resp){
+			if(resp==1){
+				$.messager.alert('Survey',"Seting Dashboard Tersimpan",'info');
+				setTimeout(function(){ window.location.href = '{$host}Backoffice'; }, 3000);
+			}else{
+				$.messager.alert('Survey',"Data Gagal Tersimpan",'error');
+				console.log(resp);
+			}
+		});
+
+	});
+</script>
+*}

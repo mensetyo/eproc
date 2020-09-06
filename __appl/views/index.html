@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AUOOOOO</title>
+</head>
+<body>
+<form id="frmsurvey_{$acak}" name="frm-survey" method="POST" enctype="multipart/form-data" action="{$host}backend/save" >
+<p>TESTING</p>
+<p>
+{foreach from=$data item=x key=y}
+{if $x.obj eq 'text'}
+{include file="template/text.html" id_tanya={$x.id} tanya={$x.tanya}}<br>
+{else if $x.obj eq 'select'}
+{include file="template/select.html" id_tanya={$x.id} tanya={$x.tanya} }<br>
+{else if $x.obj eq 'opt'}
+{include file="template/opt.html" id_tanya={$x.id} tanya={$x.tanya} }<br>
+{else}
+{include file="template/check.html" id_tanya={$x.id} tanya={$x.tanya} }<br>
+{/if}
+{/foreach}
+</p>
+<p>
+<button name="simpan" id="simpan_{$acak}">SIMPAN</button>
+</p>
+</form>
+</body>
+</html>

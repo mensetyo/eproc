@@ -1,0 +1,37 @@
+
+/* ===================================
+1. General
+==================================== */
+
+body {
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.6em;
+  color: #656565;
+}
+
+
+
+.row .row, .row-fluid .row-fluid {
+  margin-bottom: 30px;
+}
+
+
+/* ===================================
+8. Section: Content
+==================================== */
+
+#content {
+  position: relative;
+  background: #fff;
+  padding: 50px 0 0 0;
+}
+
+/* --- testimonial --- */
+
+.testimonial {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #e6e6e6;
+}

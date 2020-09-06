@@ -1,0 +1,19 @@
+<div class="row">
+ {foreach from=$data item=i}
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="{if $i.jml > 0}info-box bg-aqua{else}info-box bg-red{/if}">
+       <span class="info-box-icon"><i class="fa {if $i.jml > 0}fa-check{else}fa-remove{/if}"></i></span>
+      <div class="info-box-content">
+		<span class="info-box-text">&nbsp;</span>
+        <span class="info-box-text">{$i.txt}</span>
+      </div>
+	  <div class="progress">
+        <div class="progress-bar" style="width: 100%"></div>
+      </div>
+          <span class="progress-description">
+           {if $i.jml > 0}Sudah Terpenuhi{else}Belum Terpenuhi{/if}
+          </span>
+    </div>
+  </div>
+  {/foreach}
+</div>

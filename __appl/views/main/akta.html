@@ -1,0 +1,130 @@
+<fieldset>
+	<legend>Form Input Akta</legend>
+<div class="span10">
+<form class="form-horizontal" id="form_{$acak}" url="{$host}modul/cruddata/{$mod}" method="post" enctype="multipart/form-data">
+<table class="table table-hover">
+		<input type="hidden" name="id" value="{$data.id|default:''}">
+		<input type="hidden" name="sts_crud" value="{$sts_crud|default:'add'}">
+		
+		{include file="template/input_form.html" type='text' label="Nomor *" id="nomor" name="nomor" style_type="width:80%" class="validasi" value="{$data.nomor|default:''}"}
+		{include file="template/input_form.html" type='text' label="Tanggal *" id="tgl_srt" name="tgl_srt" style_type="width:30%" class="validasi tgl" value="{$data.tgl_srt|default:''}"}
+		{include file="template/input_form.html" type='text' label="Notaris *" id="notaris" name="notaris" style_type="width:80%" class="validasi" value="{$data.notaris|default:''}"}
+		{include file="template/input_form.html" type='textarea' label="Alamat Notaris *" id="alamat_notaris" name="alamat_notaris" style_type="width:80%" class="validasi" value="{$data.alamat_notaris|default:''}"}
+		{include file="template/input_form.html" type='file' label="Dokumen (pdf) **" id="dok" name="dok" style_type="width:80%" class="{if $sts_crud|default:'add' eq 'add'}validasi{/if}"}
+		{if $sts_crud|default:'add' eq 'edit'}
+			{if $data.nomor==''}
+				{assign var="link" value="akta_reg"}
+			{else}
+				{assign var="link" value="akta"}
+			{/if}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="javascript:void(0);" onclick="lihat_file('{$data.dok|default:''}','{$link}')">{$data.dok|default:''}</a>
+			</td>
+		</tr>
+		{/if}
+		<tr>
+			<td>&nbsp;</td>
+			<td colspan="3"><b>Akta Perubahan Terakhir (jika ada)</b></td>
+			
+		</tr>
+		{include file="template/input_form.html" type='text' label="Nomor " id="perubahan_nomor" name="perubahan_nomor" style_type="width:80%" class="" value="{$data.perubahan_nomor|default:''}"}
+		{include file="template/input_form.html" type='text' label="Tanggal " id="perubahan_tgl_srt" name="perubahan_tgl_srt" style_type="width:30%" class=" tgl" value="{$data.perubahan_tgl_srt|default:''}"}
+		{include file="template/input_form.html" type='text' label="Notaris " id="perubahan_notaris" name="perubahan_notaris" style_type="width:80%" class="" value="{$data.perubahan_notaris|default:''}"}
+		{include file="template/input_form.html" type='textarea' label="Alamat Notaris " id="perubahan_alamat_notaris" name="perubahan_alamat_notaris" style_type="width:80%" class="" value="{$data.perubahan_alamat_notaris|default:''}"}
+		{include file="template/input_form.html" type='file' label="Dokumen (pdf) **" id="perubahan_dok" name="perubahan_dok" style_type="width:80%" class=""}
+		{if $sts_crud|default:'add' eq 'edit'}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="javascript:void(0);" onclick="lihat_file('{$data.perubahan_dok|default:''}','akta_perubahan')">{$data.perubahan_dok|default:''}</a>
+			</td>
+		</tr>
+		{/if}
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+			<td style="font-weight:bold;">
+				* Data harus diisi<br>
+				** Dokumen yang diupload adalah scan dokumen ASLI (Pdf), Bukan Fotokopi
+			</td>
+		</tr>
+		
+		<!--tr>
+			<td>&nbsp;</td><td>Status</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="checkbox" name="flag" value="Y" checked>&nbsp;&nbsp;Aktif
+			</td>
+		</tr-->
+</table>
+	
+</form>
+<div class="control-group">
+	<center>
+	<label class="control-label" for="form-field-1"></label>
+	<div class="controls">
+		{include file="template/button_save.html" id_na="simpan_{$mod}"  btn_goyz="true" text="Simpan / Update" style="display:none;"}
+		{include file="template/button_save.html" id_na="edit_{$mod}"  btn_goyz="true" text="Edit Data" style_btn="btn-danger {if $masa|default:0 eq 0}disabled{/if}"}
+	</div>
+	</center>
+</div>		
+</div>
+</fieldset>
+
+<script>
+	var idx_row={$jml_row|default:1};
+	$(".validasi").validatebox({ required:true }); 
+	$('.tgl').datepicker({
+		 format: 'yyyy-mm-dd',
+		 autoclose: true
+	});
+	$("#form_{$acak}").each(function(){
+		$(this).find(':input').attr("disabled","disabled") //<-- Should return all input elements in that specific form.
+	});
+	$('.input-group.date').on('changeDate', function(){
+		$(this).datepicker('hide');
+	});
+	
+	$('#edit_{$mod}_{$acak}').click(function(){
+		$(this).hide();
+		$('#simpan_{$mod}_{$acak}').show();
+		$("#form_{$acak}").each(function(){
+			$(this).find(':input').removeAttr("disabled") //<-- Should return all input elements in that specific form.
+		});
+	});
+	$('#simpan_{$mod}_{$acak}').click(function(){
+		$(".validasi").validatebox({ required:true }); 
+		if ($("#form_{$acak}").form('validate')){
+		// ajax
+		var uri = "{$host}modul/cruddata/{$mod}";
+		var formData = new FormData($("#form_{$acak}")[0]);
+		$.ajax({
+			url: uri,
+			type: "POST",
+			data : formData,
+			processData: false,
+			contentType: false,
+			beforeSend: function() {
+				loadingna();
+			},
+			success: function(data){
+				winLoadingClose();
+				if(data==1){
+					$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+					loadUrl('{$host}modul/get_konten/akta');
+					$('.menu_{$mod}').removeClass('bg-red');
+					$('.menu_{$mod}').addClass('bg-green');
+				}else{
+					$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+				}
+				console.log(data);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+			}
+		});
+		// end ajax
+		}
+	});
+</script>

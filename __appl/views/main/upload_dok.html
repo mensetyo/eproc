@@ -1,0 +1,106 @@
+<form class="form-horizontal" id="form_{$acak}" url="{$host}modul/cruddata/{$mod}" method="post" enctype="multipart/form-data">
+<input type="hidden" name="id" value="{$data.id|default:''}">
+<input type="hidden" name="sts_crud" value="{$sts_crud|default:'add'}">
+<fieldset>
+	<legend>Download Template</legend>
+	<table class="table table-hover">
+		<tr>
+			<td width="5%">&nbsp;</td><td width="20%">1. Surat Kuasa (Jika dikuasakan)</td><td width="2"%>:</td>
+			<td style="font-weight:bold;">
+				<a href="{$host}dwn/surat_kuasa" >Surat Kuasa</a>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>2. Pakta Integritas</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="{$host}dwn/pakta_integritas" >Fakta Integritas</a>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>3. Surat Pernyataan Minat</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="{$host}dwn/minat" >Surat Pernyataan Minat</a>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>4. Formulir Keikutsertaan</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="{$host}dwn/formulir" >Formulir Keikutsertaan</a>
+			</td>
+		</tr>
+	</table>
+	
+</fieldset>
+<fieldset>
+	<legend>Upload</legend>
+	<table class="table table-hover">
+		<tr>
+			<td width="5%">&nbsp;</td><td width="20%">1. Surat Kuasa (Jika dikuasakan)</td><td width="2"%>:</td>
+			<td style="font-weight:bold;">
+				<input type="file" name="surat_kuasa" id="surat_kuasa" style="display:inline"> Last Upload File : <a href="javascript:void(0);" onclick="lihat_file('{$data.surat_kuasa|default:'-'}','surat_kuasa')">{$data.surat_kuasa|default:'-'}</a>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>2. Fakta Integritas</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="file" name="pakta_integritas" id="pakta_integritas" style="display:inline" class="validasi"> Last Upload File : <a href="javascript:void(0);" onclick="lihat_file('{$data.pakta_integritas|default:'-'}','pakta_integritas')">{$data.pakta_integritas|default:'-'}</a>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>3. Surat Pernyataan Minat</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="file" name="surat_pernyataan_minat" id="surat_pernyataan_minat" style="display:inline" class="validasi"> Last Upload File : <a href="javascript:void(0);" onclick="lihat_file('{$data.surat_pernyataan_minat|default:'-'}','surat_pernyataan')">{$data.surat_pernyataan_minat|default:'-'}</a>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>4. Formulir Keikutsertaan</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="file" name="formulir_keikutsertaan" id="formulir_keikutsertaan" style="display:inline" class="validasi"> Last Upload File : <a href="javascript:void(0);" onclick="lihat_file('{$data.formulir_keikutsertaan|default:'-'}','formulir')">{$data.formulir_keikutsertaan|default:'-'}</a>
+			</td>
+		</tr>
+	</table>
+	
+	
+</fieldset>
+</form>
+<div class="control-group">
+	<center>
+	<label class="control-label" for="form-field-1"></label>
+	<div class="controls">
+		{if $masa|default:0 eq 1}
+		{include file="template/button_save.html" id_simpan="simpan_{$mod}" id_batal="batal_{$mod}" }
+		{/if}
+	</div>
+	</center>
+</div>		
+</div>
+
+<script>
+	var idx_row={$jml_row|default:1};
+	$(".validasi").validatebox({ required:true }); 
+	$('.tgl').datepicker({
+		 format: 'yyyy-mm-dd',
+		 autoclose: true
+	});
+	$('#batal_{$mod}').click(function(){
+		$('#grid_nya_{$mod}').show();
+		$('#detil_nya_{$mod}').html('').hide();
+	});
+	
+	$('#simpan_{$mod}').click(function(){
+		submit_form('form_{$acak}',function(r){
+			if(r==1){
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+				loadUrl(host+'modul/get_konten/upload_dok');
+				$('.menu_{$mod}').removeClass('bg-red');
+				$('.menu_{$mod}').addClass('bg-green');
+			}else{
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+				console.log(r);
+			}
+		});
+
+	});
+</script>

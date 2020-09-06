@@ -1,0 +1,294 @@
+<fieldset>
+	<legend>Form Input Tenaga Ahli</legend>
+<div class="span10">
+<form class="form-horizontal" id="form_{$acak}" url="{$host}modul/cruddata/{$mod}" method="post" enctype="multipart/form-data">
+<table class="table table-hover">
+		<input type="hidden" name="id" value="{$data.id|default:''}">
+		<input type="hidden" name="sts_crud" value="{$sts_crud|default:'add'}">
+		
+		{include file="template/input_form.html" type='text' label="Nama *" id="nama" name="nama" style_type="width:80%" class="validasi" value="{$data.nama|default:''}"}
+		{include file="template/input_form.html" type='text' label="Tgl. Lahir *" id="tgl_lahir" name="tgl_lahir" style_type="width:30%" class="validasi tgl" value="{$data.tgl_lahir|default:''}"}
+		<tr>
+			<td>&nbsp;</td><td>Jenis Kelamin</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="radio" name="jenis_kelamin" id="jenis_kelamin" value="1" {if $sts_crud eq 'add'}checked{else}{if $data.jenis_kelamin eq 1}checked{/if}{/if}>&nbsp;Laki - laki&nbsp;&nbsp;
+				<input type="radio" name="jenis_kelamin" id="jenis_kelamin" value="2" {if $sts_crud eq 'edit'}{if $data.jenis_kelamin eq 2}checked{/if}{/if}>&nbsp;Perempuan
+			</td>
+		</tr>
+		{include file="template/input_form.html" type='textarea' label="Alamat *" id="alamat" name="alamat" style_type="width:80%" class="validasi" value="{$data.alamat|default:''}"}
+		{include file="template/input_form.html" type='text' label="Pendidikan Terakhir *" id="pendidikan_terakhir" name="pendidikan_terakhir" style_type="width:80%" class="validasi" value="{$data.pendidikan_terakhir|default:''}"}
+		{include file="template/input_form.html" type='text' label="Kewarganegaraan *" id="kewarganegaraan" name="kewarganegaraan" style_type="width:80%" class="validasi" value="{$data.kewarganegaraan|default:''}"}
+		{include file="template/input_form.html" type='text' label="Pengalaman Kerja (Tahun) *" id="pengalaman_kerja" name="pengalaman_kerja" style_type="width:20%" class="validasi" value="{$data.pengalaman_kerja|default:''}"}
+		{include file="template/input_form.html" type='text' label="Email " id="email" name="email" style_type="width:50%" class="" value="{$data.email|default:''}"}
+		<tr>
+			<td>&nbsp;</td><td>Status Kepegawaian</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="radio" name="status_pegawaian" id="status_pegawaian" value="1" {if $sts_crud eq 'add'}checked{else}{if $data.status_pegawaian eq 1}checked{/if}{/if}>&nbsp;Tetap&nbsp;&nbsp;
+				<input type="radio" name="status_pegawaian" id="status_pegawaian" value="2" {if $sts_crud eq 'edit'}{if $data.status_pegawaian eq 2}checked{/if}{/if}>&nbsp;Tidak Tetap
+			</td>
+		</tr>
+		{include file="template/input_form.html" type='textarea' label="Potensi / Keahlian *" id="keahlian" name="keahlian" style_type="width:80%" class="validasi" value="{$data.keahlian|default:''}"}
+		{include file="template/input_form.html" type='text' label="Jabatan *" id="jabatan" name="jabatan" style_type="width:80%" class="validasi" value="{$data.jabatan|default:''}"}
+		<tr>
+			<td>&nbsp;</td><td>Pengalaman (Tahun & Uraian)</td><td></td>
+			<td style="font-weight:bold;">
+				<table class="table table-bordered table-hovered" id="dt_sub_{$acak}">
+						<thead style="background:#3C8DBC;color:#fff;font-size:15px;">
+							<tr>
+								<th style="text-align:center;;vertical-align:middle;width:80px">Tahun</th>
+								<th style="text-align:left;;vertical-align:middle;width:200px">Pengalaman/Deskripsi</th>
+								<th style="text-align:center;;vertical-align:middle;width:50px">
+									 <a href="javascript:void(0);" class="btn btn-sm btn-warning" onclick="tambah_row('bd_peng','{$acak}')">+</a>
+								</th>
+							</tr>
+						</thead>
+						<tbody style="background:#D4E8F4;" class="bd_peng">
+							{if $sts_crud|default:'add' eq 'add'}
+							<tr>
+								<td style="text-align:center;;vertical-align:middle;width:80px">
+									<input type="text" name="p_tahun[]" id="p_tahun_{$acak}" style="width:80px;height:30px;" class="angka">
+								</td>
+								<td>
+									<input type="text" name="p_desc[]" id="p_desc_{$acak}" style="width:100%;height:30px;">
+								</td>
+								<td style="text-align:center;;vertical-align:middle;">
+									<a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="$(this).parents('tr').first().remove();">-</a></td>
+								</td>
+							</tr>
+							{else}
+							{foreach from=$pengalaman item=i}
+							<tr>
+								<td style="text-align:center;;vertical-align:middle;width:80px">
+									<input type="text" name="p_tahun[]" id="p_tahun_{$acak}" style="width:80px;height:30px;" class="angka" value="{$i.tahun|default:''}">
+								</td>
+								<td>
+									<input type="text" name="p_desc[]" id="p_desc_{$acak}" style="width:100%;height:30px;" value="{$i.pengalaman|default:''}">
+								</td>
+								<td style="text-align:center;;vertical-align:middle;">
+									<a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="$(this).parents('tr').first().remove();">-</a></td>
+								</td>
+							</tr>
+							{/foreach}
+							{/if}
+						</tbody>
+				</table>
+				<!--input type ="text" name="pengalaman_tahun_1" id="pengalaman_tahun_1" style="width:10%;height:30px;" class="angka" placeholder="Tahun" value="{$data.pengalaman_tahun_1|default:''}" >&nbsp;&nbsp;&nbsp;<input type ="text" name="pengalaman_uraian_1" id="pengalaman_uraian_1" style="width:70%;display:inline;" class="form-control" value="{$data.pengalaman_uraian_1|default:''}"-->
+			</td>
+		</tr>
+		<!--tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td></td>
+			<td style="font-weight:bold;">
+				<input type ="text" name="pengalaman_tahun_2" id="pengalaman_tahun_2" style="width:10%;height:30px;" class="angka" placeholder="Tahun" value="{$data.pengalaman_tahun_2|default:''}"  >&nbsp;&nbsp;&nbsp;<input type ="text" name="pengalaman_uraian_2" id="pengalaman_uraian_2" style="width:70%;display:inline;"  class="form-control" value="{$data.pengalaman_uraian_2|default:''}">
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td></td>
+			<td style="font-weight:bold;">
+				<input type ="text" name="pengalaman_tahun_3" id="pengalaman_tahun_3" style="width:10%;height:30px;" class="angka" placeholder="Tahun" value="{$data.pengalaman_tahun_3|default:''}"  >&nbsp;&nbsp;&nbsp;<input type ="text" name="pengalaman_uraian_3" id="pengalaman_uraian_3" style="width:70%;display:inline;"  class="form-control" value="{$data.pengalaman_uraian_3|default:''}">
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td></td>
+			<td style="font-weight:bold;">
+				<input type ="text" name="pengalaman_tahun_4" id="pengalaman_tahun_4" style="width:10%;height:30px;" class="angka" placeholder="Tahun" value="{$data.pengalaman_tahun_4|default:''}" >&nbsp;&nbsp;&nbsp;<input type ="text" name="pengalaman_uraian_4" id="pengalaman_uraian_4" style="width:70%;display:inline;"  class="form-control" value="{$data.pengalaman_uraian_4|default:''}">
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td></td>
+			<td style="font-weight:bold;">
+				<input type ="text" name="pengalaman_tahun_5" id="pengalaman_tahun_5" style="width:10%;height:30px;" class="angka" placeholder="Tahun" value="{$data.pengalaman_tahun_5|default:''}" >&nbsp;&nbsp;&nbsp;<input type ="text" name="pengalaman_uraian_5" id="pengalaman_uraian_5" style="width:70%;display:inline;"  class="form-control" value="{$data.pengalaman_uraian_5|default:''}">
+			</td>
+		</tr-->
+		<tr>
+			<td>&nbsp;</td><td>Sertifikat (Tahun & Uraian)</td><td></td>
+			<td style="font-weight:bold;">
+				<table class="table table-bordered table-hovered" id="dt_sub_{$acak}">
+						<thead style="background:#3C8DBC;color:#fff;font-size:15px;">
+							<tr>
+								<th style="text-align:center;;vertical-align:middle;width:80px">Tahun</th>
+								<th style="text-align:left;;vertical-align:middle;width:200px">Sertifikat/Deskripsi</th>
+								<th style="text-align:center;;vertical-align:middle;width:50px">
+									 <a href="javascript:void(0);" class="btn btn-sm btn-warning" onclick="tambah_row('bd_serti','{$acak}')">+</a>
+								</th>
+							</tr>
+						</thead>
+						<tbody style="background:#D4E8F4;" class="bd_serti">
+							{if $sts_crud|default:'add' eq 'add'}
+							<tr>
+								<td style="text-align:center;;vertical-align:middle;width:80px">
+									<input type="text" name="s_tahun[]" id="s_tahun_{$acak}" style="width:80px;height:30px;" class="angka">
+								</td>
+								<td>
+									<input type="text" name="s_desc[]" id="s_desc_{$acak}" style="width:100%;height:30px;">
+								</td>
+								<td style="text-align:center;;vertical-align:middle;">
+									<a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="$(this).parents('tr').first().remove();">-</a></td>
+								</td>
+							</tr>
+							{else}
+							{foreach from=$serti item=i}
+							<tr>
+								<td style="text-align:center;;vertical-align:middle;width:80px">
+									<input type="text" name="s_tahun[]" id="s_tahun_{$acak}" style="width:80px;height:30px;" class="angka" value="{$i.tahun|default:''}">
+								</td>
+								<td>
+									<input type="text" name="s_desc[]" id="s_desc_{$acak}" style="width:100%;height:30px;" value="{$i.sertifikat|default:''}">
+								</td>
+								<td style="text-align:center;;vertical-align:middle;">
+									<a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="$(this).parents('tr').first().remove();">-</a></td>
+								</td>
+							</tr>
+							{/foreach}
+							{/if}
+						</tbody>
+				</table>
+				<!--input type ="text" name="sertifitikat_tahun_1" id="sertifitikat_tahun_1" style="width:10%;height:30px;" class="angka" placeholder="Tahun" value="{$data.sertifitikat_tahun_1|default:''}" >&nbsp;&nbsp;&nbsp;<input type ="text" name="sertifitikat_uraian_1" id="sertifitikat_uraian_1" style="width:70%;display:inline;" class="form-control" value="{$data.sertifitikat_uraian_1|default:''}"-->
+			</td>
+		</tr>
+		<!--tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td></td>
+			<td style="font-weight:bold;">
+				<input type ="text" name="sertifitikat_tahun_2" id="sertifitikat_tahun_2" style="width:10%;height:30px;" class="angka" placeholder="Tahun" value="{$data.sertifitikat_tahun_2|default:''}"  >&nbsp;&nbsp;&nbsp;<input type ="text" name="sertifitikat_uraian_2" id="sertifitikat_uraian_2" style="width:70%;display:inline;"  class="form-control" value="{$data.sertifitikat_uraian_2|default:''}">
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td></td>
+			<td style="font-weight:bold;">
+				<input type ="text" name="sertifitikat_tahun_3" id="sertifitikat_tahun_3" style="width:10%;height:30px;" class="angka" placeholder="Tahun" value="{$data.sertifitikat_tahun_3|default:''}" >&nbsp;&nbsp;&nbsp;<input type ="text" name="sertifitikat_uraian_3" id="sertifitikat_uraian_3" style="width:70%;display:inline;"  class="form-control" value="{$data.sertifitikat_uraian_3|default:''}">
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td></td>
+			<td style="font-weight:bold;">
+				<input type ="text" name="sertifitikat_tahun_4" id="sertifitikat_tahun_4" style="width:10%;height:30px;" class="angka" placeholder="Tahun" value="{$data.sertifitikat_tahun_4|default:''}" >&nbsp;&nbsp;&nbsp;<input type ="text" name="sertifitikat_uraian_4" id="sertifitikat_uraian_4" style="width:70%;display:inline;"  class="form-control" value="{$data.sertifitikat_uraian_4|default:''}">
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td></td>
+			<td style="font-weight:bold;">
+				<input type ="text" name="sertifitikat_tahun_5" id="sertifitikat_tahun_5" style="width:10%;height:30px;" class="angka" placeholder="Tahun"  value="{$data.sertifitikat_tahun_5|default:''}">&nbsp;&nbsp;&nbsp;<input type ="text" name="sertifitikat_uraian_5" id="sertifitikat_uraian_5" style="width:70%;display:inline;"  class="form-control" value="{$data.sertifitikat_uraian_5|default:''}">
+			</td>
+		</tr-->
+		<tr>
+			<td>&nbsp;</td><td>Bahasa</td><td></td>
+			<td style="font-weight:bold;">
+				<input type ="text" name="bahasa_uraian_1" id="bahasa_uraian_1" style="width:70%;display:inline;" class="form-control" value="{$data.bahasa_uraian_1|default:''}">
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td></td>
+			<td style="font-weight:bold;">
+				<input type ="text" name="bahasa_uraian_2" id="bahasa_uraian_2" style="width:70%;display:inline;" class="form-control" value="{$data.bahasa_uraian_2|default:''}">
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td></td>
+			<td style="font-weight:bold;">
+				<input type ="text" name="bahasa_uraian_3" id="bahasa_uraian_3" style="width:70%;display:inline;" class="form-control" value="{$data.bahasa_uraian_3|default:''}">
+			</td>
+		</tr>
+		<!-- {include file="template/input_form.html" type='file' label="Dokumen (pdf) **" id="file" name="file" style_type="width:80%" } -->
+		{include file="template/input_form.html" type='file' label="Dokumen (pdf) **" id="file" name="file" style_type="width:80%" class="{if $sts_crud|default:'add' eq 'add'}validasi{/if}"}
+		{if $sts_crud|default:'add' eq 'edit'}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="javascript:void(0);" onclick="lihat_file('{$data.file|default:''}','ta')">{$data.file|default:''}</a>
+			</td>
+		</tr>
+		{/if}
+		
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+			<td style="font-weight:bold;">
+				* Data harus diisi<br>
+				** Dokumen yang diupload adalah scan dokumen ASLI, Bukan Fotokopi
+			</td>
+		</tr>
+		
+		<!--tr>
+			<td>&nbsp;</td><td>Status</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="checkbox" name="flag" value="Y" checked>&nbsp;&nbsp;Aktif
+			</td>
+		</tr-->
+</table>
+	
+</form>
+<div class="control-group">
+	<center>
+	<label class="control-label" for="form-field-1"></label>
+	<div class="controls">
+		{if $masa|default:0 eq 1}
+		{include file="template/button_save.html" id_simpan="simpan_{$mod}" id_batal="batal_{$mod}" }
+		{/if}
+	</div>
+	</center>
+</div>		
+</div>
+</fieldset>
+
+<script>
+	var idx_row={$jml_row|default:1};
+	var idx_row_serti={$jml_row_serti|default:1};
+	$(".validasi").validatebox({ required:true }); 
+	$('.tgl').datepicker({
+		 format: 'yyyy-mm-dd',
+		 autoclose: true
+	});
+	$('.angka').numberbox();
+	$('#batal_{$mod}').click(function(){
+		$('#grid_nya_{$mod}').show();
+		$('#detil_nya_{$mod}').html('').hide();
+	});
+	
+	$('#simpan_{$mod}').click(function(){
+		$(".validasi").validatebox({ required:true }); 
+		if ($("#form_{$acak}").form('validate')){
+		// ajax
+		var uri = "{$host}modul/cruddata/{$mod}";
+		var formData = new FormData($("#form_{$acak}")[0]);
+		$.ajax({
+			url: uri,
+			type: "POST",
+			data : formData,
+			processData: false,
+			contentType: false,
+			beforeSend: function() {
+				loadingna();
+			},
+			success: function(data){
+				winLoadingClose();
+				if(data==1){
+					$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+					$('#grid_nya_{$mod}').show();
+					$('#detil_nya_{$mod}').html('').hide();
+					$('#grid_{$mod}').datagrid('reload');
+				}else{
+					$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+				}
+				console.log(data);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+			}
+		});
+		// end ajax
+		}
+		// submit_form('form_{$acak}',function(r){
+		// 	if(r==1){
+		// 		winLoadingClose();
+		// 		$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+		// 		$('#grid_nya_{$mod}').show();
+		// 		$('#detil_nya_{$mod}').html('').hide();
+		// 		$('#grid_{$mod}').datagrid('reload');
+		// 	}else{
+		// 		winLoadingClose();
+		// 		$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+		// 		console.log(r);
+		// 	}
+		// });
+
+	});
+</script>

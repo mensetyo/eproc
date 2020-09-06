@@ -1,0 +1,98 @@
+<fieldset>
+	<legend>Form Input Peralatan</legend>
+<div class="span10">
+<form class="form-horizontal" id="form_{$acak}" url="{$host}modul/cruddata/{$mod}" method="post" enctype="multipart/form-data">
+<table class="table table-hover">
+		<input type="hidden" name="id" value="{$data.id|default:''}">
+		<input type="hidden" name="sts_crud" value="{$sts_crud|default:'add'}">
+		
+		{include file="template/input_form.html" type='text' label="Nama Alat *" id="nama_alat" name="nama_alat" style_type="width:80%" class="validasi" value="{$data.nama_alat|default:''}"}
+		{include file="template/input_form.html" type='text' label="Jumlah *" id="jumlah" name="jumlah" style_type="width:10%;height:30px;" class="validasi angka" value="{$data.jumlah|default:''}"}
+		{include file="template/input_form.html" type='text' label="Kapasitas " id="kapasitas" name="kapasitas" style_type="width:80%" class="" value="{$data.kapasitas|default:''}"}
+		{include file="template/input_form.html" type='text' label="Merk " id="merk" name="merk" style_type="width:80%" class="" value="{$data.merk|default:''}"}
+		{include file="template/input_form.html" type='text' label="Tahun Pembuatan *" id="tahun" name="tahun" style_type="width:10%;height:30px;" class="angka validasi" value="{$data.tahun|default:''}"}
+		<tr>
+			<td>&nbsp;</td><td>Kondisi</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="radio" name="kondisi" id="kondisi" value="1" {if $sts_crud eq 'add'}checked{else}{if $data.kondisi eq 1}checked{/if}{/if}>&nbsp;Baik&nbsp;&nbsp;
+				<input type="radio" name="kondisi" id="kondisi" value="2" {if $sts_crud eq 'edit'}{if $data.kondisi eq 2}checked{/if}{/if}>&nbsp;Rusak
+			</td>
+		</tr>
+		{include file="template/input_form.html" type='text' label="Lokasi " id="lokasi" name="lokasi" style_type="width:80%" class="" value="{$data.lokasi|default:''}"}
+		<tr>
+			<td>&nbsp;</td><td>Status Kepemilikan</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="radio" name="status_milik" id="status_milik" value="1" {if $sts_crud eq 'add'}checked{else}{if $data.status_milik eq 1}checked{/if}{/if}>&nbsp;Milik Sendiri&nbsp;&nbsp;
+				<input type="radio" name="status_milik" id="status_milik" value="2" {if $sts_crud eq 'edit'}{if $data.status_milik eq 2}checked{/if}{/if}>&nbsp;Sewa
+			</td>
+		</tr>
+		{include file="template/input_form.html" type='file' label="Bukti Kepemilikan" id="bukti_milik" name="bukti_milik" style_type="width:80%" }
+		{if $sts_crud|default:'add' eq 'edit'}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="javascript:void(0);" onclick="lihat_file('{$data.bukti_milik|default:''}','peralatan')">{$data.bukti_milik|default:''}</a>
+			</td>
+		</tr>
+		{/if}
+		
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+			<td style="font-weight:bold;">
+				* Data harus diisi<br>
+				** Dokumen yang diupload adalah scan dokumen ASLI, Bukan Fotokopi
+			</td>
+		</tr>
+		
+		<!--tr>
+			<td>&nbsp;</td><td>Status</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="checkbox" name="flag" value="Y" checked>&nbsp;&nbsp;Aktif
+			</td>
+		</tr-->
+</table>
+	
+</form>
+<div class="control-group">
+	<center>
+	<label class="control-label" for="form-field-1"></label>
+	<div class="controls">
+		{if $masa|default:0 eq 1}
+		{include file="template/button_save.html" id_simpan="simpan_{$mod}" id_batal="batal_{$mod}" }
+		{/if}
+	</div>
+	</center>
+</div>		
+</div>
+</fieldset>
+
+<script>
+	var idx_row={$jml_row|default:1};
+	$(".validasi").validatebox({ required:true }); 
+	$('.tgl').datepicker({
+		 format: 'yyyy-mm-dd',
+		 autoclose: true
+	});
+	$('.angka').numberbox();
+	$('#batal_{$mod}').click(function(){
+		$('#grid_nya_{$mod}').show();
+		$('#detil_nya_{$mod}').html('').hide();
+	});
+	
+	$('#simpan_{$mod}').click(function(){
+		submit_form('form_{$acak}',function(r){
+			if(r==1){
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+				$('#grid_nya_{$mod}').show();
+				$('#detil_nya_{$mod}').html('').hide();
+				$('#grid_{$mod}').datagrid('reload');
+			}else{
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+				console.log(r);
+			}
+		});
+
+	});
+</script>

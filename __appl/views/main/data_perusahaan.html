@@ -1,0 +1,185 @@
+<div class="span10">
+<form class="form-horizontal" id="form_{$acak}" url="{$host}modul/cruddata/{$mod}" method="post" enctype="multipart/form-data">
+<input type="hidden" name="id" value="{$data.id|default:''}">
+<input type="hidden" name="sts_crud" value="{$sts_crud|default:'add'}">
+<fieldset>
+	
+	<table class="table table-hover">
+		<tr>
+			<td>&nbsp;</td><td>Bentuk Perusahaan * </td><td>:</td>
+			<td style="font-weight:bold;">
+				<select name="tipe_perusahaan" id="tipe_perusahaan_{$acak}" class="form-control " style="width:80%">
+					<option value="">-- Pilih --</option>
+					{foreach from=$bentuk item=i}
+					<option value="{$i.id}" {if $sts_crud eq 'edit'}{if $i.id eq $data.tipe_perusahaan}selected{/if}{/if}>{$i.tipe_perusahaan}</option>
+					{/foreach}
+				</select>
+			</td>
+		</tr>
+		{include file="template/input_form.html" type='text' label="Nama Perusahaan *" id="nm_perusahaan" name="nm_perusahaan" style_type="width:80%" class="validasi" value="{$data.nm_perusahaan|default:''}"}
+		{include file="template/input_form.html" type='file' label="File NPWP (pdf) *" id="file_npwp" name="file_npwp" style_type="width:80%" class="{if $sts_crud|default:'add' eq 'add'}validasi{/if}"}
+		{if $sts_crud|default:'add' eq 'edit'}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="javascript:void(0);" onclick="lihat_file('{$data.file_npwp|default:''}','npwp')">{$data.file_npwp|default:''}</a>
+			</td>
+		</tr>
+		{/if}
+		{include file="template/input_form.html" type='file' label="File KTP (pdf) *" id="file_ktp" name="file_ktp" style_type="width:80%" class="{if $sts_crud|default:'add' eq 'add'}validasi{/if}"}
+		{if $sts_crud|default:'add' eq 'edit'}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="javascript:void(0);" onclick="lihat_file('{$data.file_ktp|default:''}','ktp')">{$data.file_ktp|default:''}</a>
+			</td>
+		</tr>
+		{/if}
+		
+		{include file="template/input_form.html" type='text' label="Nomor Pengukuhan (PKP) *" id="no_pengukuhan" name="no_pengukuhan" style_type="width:80%" class="validasi" value="{$data.no_pengukuhan|default:''}"}
+		{include file="template/input_form.html" type='file' label="File PKP (pdf) *" id="file_pkp" name="file_pkp" style_type="width:80%" class="{if $sts_crud|default:'add' eq 'add'}validasi{/if}"}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="javascript:void(0);" onclick="lihat_file('{$data.file_pkp|default:''}','pkp')">{$data.file_pkp|default:''}</a>
+			</td>
+		</tr>
+
+		{include file="template/input_form.html" type='file' label="File Rekening (pdf) *" id="file_rekening" name="file_rekening" style_type="width:80%" class="{if $sts_crud|default:'add' eq 'add'}validasi{/if}"}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="javascript:void(0);" onclick="lihat_file('{$data.file_rekening|default:''}','rekening')">{$data.file_rekening|default:''}</a>
+			</td>
+		</tr>
+
+		{include file="template/input_form.html" type='textarea' label="Alamat *" id="alamat" name="alamat" style_type="width:80%" class="validasi" value="{$data.alamat|default:''}"}
+		<tr>
+			<td>&nbsp;</td><td>Propinsi *</td><td>:</td>
+			<td style="font-weight:bold;">
+				<select name="propinsi" id="propinsi" class="form-control" style="width:80%">
+					<option value="">-- Pilih --</option>
+					{foreach from=$propinsi item=i}
+					<option value="{$i.id}" {if $sts_crud eq 'edit'}{if $i.id eq $data.propinsi}selected{/if}{/if}>{$i.name}</option>
+					{/foreach}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>KAB/KOTA *</td><td>:</td>
+			<td style="font-weight:bold;">
+				<select name="kota" id="kota" class="form-control" style="width:80%">
+					<option value="">-- Pilih --</option>
+				</select>
+			</td>
+		</tr>
+		
+		
+		{include file="template/input_form.html" type='text' label="Telp *" id="no_tlp" name="no_tlp" style_type="width:80%" class="validasi" value="{$data.no_tlp|default:''}"}
+		{include file="template/input_form.html" type='text' label="Fax " id="fax" name="fax" style_type="width:80%" class="" value="{$data.fax|default:''}"}
+		{include file="template/input_form.html" type='text' label="HP *" id="no_hp" name="no_hp" style_type="width:80%" class="validasi" value="{$data.no_hp|default:''}"}
+		{include file="template/input_form.html" type='text' label="Kode Pos *" id="kode_pos" name="kode_pos" style_type="width:80%" class="validasi" value="{$data.kode_pos|default:''}"}
+		{include file="template/input_form.html" type='text' label="Email *" id="email" name="email" style_type="width:80%" class="validasi_email" value="{$data.email}"}		
+		
+		{include file="template/input_form.html" type='text' label="Website " id="website" name="website" style_type="width:80%" class="" value="{$data.website|default:''}"}
+		<tr>
+			<td>&nbsp;</td><td>Kantor Cabang </td><td>:</td>
+			<td style="font-weight:bold;">
+				<select name="kantor_cabang" id="kantor_cabang" class="form-control" style="width:80%">
+					<option value="1">YA</option>
+					<option value="2" selected>Tidak</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+	
+	
+</fieldset>
+</form>
+<div class="control-group">
+	<center>
+	<label class="control-label" for="form-field-1"></label>
+	<div class="controls">
+		{include file="template/button_save.html" id_na="simpan_{$mod}"  btn_goyz="true" text="Simpan / Update" style="display:none;"}
+		{include file="template/button_save.html" id_na="edit_{$mod}"  btn_goyz="true" text="Edit Data" style_btn="btn-danger {if $masa|default:0 eq 0}disabled{/if}"}
+	</div>
+	</center>
+</div>		
+</div>
+
+<script>
+	var idx_row={$jml_row|default:1};
+	$("#form_{$acak}").each(function(){
+		$(this).find(':input').attr("disabled","disabled") //<-- Should return all input elements in that specific form.
+	});
+	$(".validasi").validatebox({ required:true }); 
+	$('.tgl').datepicker({
+		 format: 'yyyy-mm-dd',
+		 autoclose: true
+	});
+	$('#propinsi').change(function(){
+		fillCombo(host+'modul/get_combo/kabkota', 'kota','kabkota', $(this).val());
+	});
+	{if $sts_crud eq 'edit'}
+		fillCombo(host+'modul/get_combo/kabkota', 'kota','kabkota', $('#propinsi').val(),{$data.kota|default:0});
+	{/if}
+	
+	
+	$('#edit_{$mod}_{$acak}').click(function(){
+		$(this).hide();
+		$('#simpan_{$mod}_{$acak}').show();
+		$("#form_{$acak}").each(function(){
+			$(this).find(':input').removeAttr("disabled") //<-- Should return all input elements in that specific form.
+		});
+	});
+	
+	$('#simpan_{$mod}_{$acak}').click(function(){
+		$(".validasi").validatebox({ required:true }); 
+		if ($("#form_{$acak}").form('validate')){
+		// ajax
+		var uri = "{$host}modul/cruddata/{$mod}";
+		var formData = new FormData($("#form_{$acak}")[0]);
+		$.ajax({
+			url: uri,
+			type: "POST",
+			data : formData,
+			processData: false,
+			contentType: false,
+			beforeSend: function() {
+				loadingna();
+			},
+			success: function(data){
+				winLoadingClose();
+				if(data==1){
+					$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+					loadUrl(host+'modul/get_konten/data_perusahaan');
+					$('.menu_{$mod}').removeClass('bg-red');
+					$('.menu_{$mod}').addClass('bg-green')
+				}else{
+					$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+				}
+				console.log(data);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+			}
+		});
+		// end ajax
+		}
+		// submit_form('form_{$acak}',function(r){
+		// 	if(r==1){
+		// 		winLoadingClose();
+		// 		$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+		// 		loadUrl(host+'modul/get_konten/data_perusahaan');
+		// 		$('.menu_{$mod}').removeClass('bg-red');
+		// 		$('.menu_{$mod}').addClass('bg-green');
+		// 	}else{
+		// 		winLoadingClose();
+		// 		$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+		// 		console.log(r);
+		// 	}
+		// });
+
+	});
+</script>

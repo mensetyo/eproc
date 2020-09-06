@@ -1,0 +1,84 @@
+<fieldset>
+	<legend>Form Input Pengurus</legend>
+<div class="span10">
+<form class="form-horizontal" id="form_{$acak}" url="{$host}modul/cruddata/{$mod}" method="post" enctype="multipart/form-data">
+<table class="table table-hover">
+		<input type="hidden" name="id" value="{$data.id|default:''}">
+		<input type="hidden" name="sts_crud" value="{$sts_crud|default:'add'}">
+		
+		{include file="template/input_form.html" type='text' label="Nama *" id="nama" name="nama" style_type="width:80%" class="validasi" value="{$data.nama|default:''}"}
+		{include file="template/input_form.html" type='text' label="No KTP *" id="no_ktp" name="no_ktp" style_type="width:80%" class="validasi" value="{$data.no_ktp|default:''}"}
+		{include file="template/input_form.html" type='textarea' label="Alamat *" id="alamat" name="alamat" style_type="width:80%" class="validasi" value="{$data.alamat|default:''}"}
+		{include file="template/input_form.html" type='text' label="Jabatan *" id="jabatan" name="jabatan" style_type="width:80%" class="validasi" value="{$data.jabatan|default:''}"}
+		{include file="template/input_form.html" type='text' label="Menjabat Sejak *" id="sjabat" name="sjabat" style_type="width:30%" class="validasi tgl" value="{$data.sjabat|default:''}"}
+		{include file="template/input_form.html" type='text' label="Sampai *" id="ejabat" name="ejabat" style_type="width:30%" class="validasi tgl" value="{$data.ejabat|default:''}"}
+		{include file="template/input_form.html" type='text' label="Notaris *" id="notaris" name="notaris" style_type="width:80%" class="validasi" value="{$data.notaris|default:''}"}
+		{include file="template/input_form.html" type='file' label="Dokumen (pdf) *" id="dok" name="dok" style_type="width:80%" class="{if $sts_crud|default:'add' eq 'add'}validasi{/if}"}
+		{if $sts_crud|default:'add' eq 'edit'}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="javascript:void(0);" onclick="lihat_file('{$data.dok|default:''}','pengurus')">{$data.dok|default:''}</a>
+			</td>
+		</tr>
+		{/if}
+		
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+			<td style="font-weight:bold;">
+				* Data harus diisi<br>
+				** Dokumen yang diupload adalah scan dokumen ASLI, Bukan Fotokopi
+			</td>
+		</tr>
+		
+		<!--tr>
+			<td>&nbsp;</td><td>Status</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="checkbox" name="flag" value="Y" checked>&nbsp;&nbsp;Aktif
+			</td>
+		</tr-->
+</table>
+	
+</form>
+<div class="control-group">
+	<center>
+	<label class="control-label" for="form-field-1"></label>
+	<div class="controls">
+		{if $masa|default:0 eq 1}
+		{include file="template/button_save.html" id_simpan="simpan_{$mod}" id_batal="batal_{$mod}" }
+		{/if}
+	</div>
+	</center>
+</div>		
+</div>
+</fieldset>
+
+<script>
+	var idx_row={$jml_row|default:1};
+	$(".validasi").validatebox({ required:true }); 
+	$('.tgl').datepicker({
+		 format: 'yyyy-mm-dd',
+		 autoclose: true
+	});
+	$('#batal_{$mod}').click(function(){
+		$('#grid_nya_{$mod}').show();
+		$('#detil_nya_{$mod}').html('').hide();
+	});
+	
+	$('#simpan_{$mod}').click(function(){
+		submit_form('form_{$acak}',function(r){
+			if(r==1){
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+				$('#grid_nya_{$mod}').show();
+				$('#detil_nya_{$mod}').html('').hide();
+				$('#grid_{$mod}').datagrid('reload');
+			}else{
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+				console.log(r);
+			}
+		});
+
+	});
+</script>

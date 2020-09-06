@@ -1,0 +1,83 @@
+<fieldset>
+	<legend>Form Input Surat Penting</legend>
+<div class="span10">
+<form class="form-horizontal" id="form_{$acak}" url="{$host}modul/cruddata/{$mod}" method="post" enctype="multipart/form-data">
+<table class="table table-hover">
+		<input type="hidden" name="id" value="{$data.id|default:''}">
+		<input type="hidden" name="sts_crud" value="{$sts_crud|default:'add'}">
+		
+		{include file="template/input_form.html" type='text' label="Jenis  *" id="jenis" name="jenis" style_type="width:80%" class="validasi" value="{$data.jenis|default:''}"}
+		{include file="template/input_form.html" type='text' label="Nomor  *" id="nomor" name="nomor" style_type="width:80%" class="validasi" value="{$data.nomor|default:''}"}
+		{include file="template/input_form.html" type='text' label="Instansi Pemberi  *" id="instansi_pemberi" name="instansi_pemberi" style_type="width:80%" class="validasi" value="{$data.instansi_pemberi|default:''}"}
+		{include file="template/input_form.html" type='text' label="Tgl. Terbit *" id="tgl_terbit" name="tgl_terbit" style_type="width:30%" class="validasi tgl" value="{$data.tgl_terbit|default:''}"}
+		{include file="template/input_form.html" type='text' label="Masa Berlaku *" id="masa_berlaku" name="masa_berlaku" style_type="width:30%" class="validasi tgl" value="{$data.masa_berlaku|default:''}"}
+		{include file="template/input_form.html" type='textarea' label="Ringkasan " id="ringkasan_surat" name="ringkasan_surat" style_type="width:80%" class="" value="{$data.ringkasan_surat|default:''}"}
+		{include file="template/input_form.html" type='file' label="Dokumen (pdf) *" id="file" name="file" style_type="width:80%" class="{if $sts_crud|default:'add' eq 'add'}validasi{/if}"}
+		{if $sts_crud|default:'add' eq 'edit'}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+			<td style="font-weight:bold;">
+				{$data.file|default:''}
+			</td>
+		</tr>
+		{/if}
+		
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+			<td style="font-weight:bold;">
+				* Data harus diisi<br>
+				** Dokumen yang diupload adalah scan dokumen ASLI, Bukan Fotokopi
+			</td>
+		</tr>
+		
+		<!--tr>
+			<td>&nbsp;</td><td>Status</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="checkbox" name="flag" value="Y" checked>&nbsp;&nbsp;Aktif
+			</td>
+		</tr-->
+</table>
+	
+</form>
+<div class="control-group">
+	<center>
+	<label class="control-label" for="form-field-1"></label>
+	<div class="controls">
+		{if $masa|default:0 eq 1}
+		{include file="template/button_save.html" id_simpan="simpan_{$mod}" id_batal="batal_{$mod}" }
+		{/if}
+	</div>
+	</center>
+</div>		
+</div>
+</fieldset>
+
+<script>
+	var idx_row={$jml_row|default:1};
+	$(".validasi").validatebox({ required:true }); 
+	$('.tgl').datepicker({
+		 format: 'yyyy-mm-dd',
+		 autoclose: true
+	});
+	$('#batal_{$mod}').click(function(){
+		$('#grid_nya_{$mod}').show();
+		$('#detil_nya_{$mod}').html('').hide();
+	});
+	
+	$('#simpan_{$mod}').click(function(){
+		submit_form('form_{$acak}',function(r){
+			if(r==1){
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+				$('#grid_nya_{$mod}').show();
+				$('#detil_nya_{$mod}').html('').hide();
+				$('#grid_{$mod}').datagrid('reload');
+			}else{
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+				console.log(r);
+			}
+		});
+
+	});
+</script>

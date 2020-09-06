@@ -1,0 +1,141 @@
+<fieldset>
+	<legend>Form Input Projek KJPP</legend>
+<div class="span10">
+<form class="form-horizontal" id="form_{$acak}" url="{$host}modul/cruddata/{$mod}" method="post" enctype="multipart/form-data">
+<table class="table table-hover">
+		<input type="hidden" name="id" value="{$data.id|default:''}">
+		<input type="hidden" name="sts_crud" value="{$sts_crud|default:'add'}">
+		
+		{include file="template/input_form.html" type='text' label="No Penawaran" id="no_penawaran" name="no_penawaran" style_type="width:80%" class="validasi" value="{$data.no_penawaran|default:$no_penawaran}" readonly="readonly"}
+		<tr>
+			<td>&nbsp;</td><td>Kantor Pusat/Cabang</td><td>:</td>
+			<td style="font-weight:bold;">
+				<select class="form-control input-sm" id="cl_kantor_cabang_id_{$acak}" name="cl_kantor_cabang_id" style="width:80%">
+					{foreach from=$cabang item=i}
+					<option value="{$i.id}">({$i.kode}) {$i.kantor_cabang}</option>
+					{/foreach}
+				</select>
+			</td>
+		</tr>
+		{include file="template/input_form.html" type='text' label="Pemberi Tugas" id="nama_pemberi_tugas" name="nama_pemberi_tugas" style_type="width:80%" class="validasi" value="{$data.nama_pemberi_tugas|default:''}" }
+		{include file="template/input_form.html" type='text' label="Alamat" id="alamat" name="alamat" style_type="width:80%" class="validasi" value="{$data.alamat|default:''}" }
+		{include file="template/input_form.html" type='text' label="Tlp." id="tlp" name="tlp" style_type="width:30%" class="validasi" value="{$data.tlp|default:''}" }
+		{include file="template/input_form.html" type='text' label="Pengguna Laporan" id="nama_pengguna_laporan" name="nama_pengguna_laporan" style_type="width:80%" class="validasi" value="{$data.nama_pengguna_laporan|default:''}" }
+		{include file="template/input_form.html" type='text' label="Alamat Pengguna" id="alamat_pengguna_laporan" name="alamat_pengguna_laporan" style_type="width:80%" class="validasi" value="{$data.alamat_pengguna_laporan|default:''}" }
+		{include file="template/input_form.html" type='text' label="Tlp. Pengguna" id="tlp_pengguna_laporan" name="tlp_pengguna_laporan" style_type="width:30%" class="validasi" value="{$data.tlp_pengguna_laporan|default:''}" }
+		{include file="template/input_form.html" type='text' label="Email" id="email" name="email" style_type="width:50%" class="validasi" value="{$data.email|default:''}" }
+		{include file="template/input_form.html" type='text' label="Objek Penilaian" id="obj_penilaian" name="obj_penilaian" style_type="width:80%" class="validasi" value="{$data.obj_penilaian|default:''}" }
+		{include file="template/input_form.html" type='text' label="Luas Tanah (m2)" id="luas_tanah" name="luas_tanah" style_type="width:20%;height:34px;" class="validasi angka" value="{$data.luas_tanah|default:''}" }
+		{include file="template/input_form.html" type='text' label="Luas Bangunan (m2)" id="luas_bangunan" name="luas_bangunan" style_type="width:20%;height:34px;" class="validasi angka" value="{$data.luas_bangunan|default:''}" }
+		{include file="template/input_form.html" type='text' label="Alamat Objek" id="alamat_obj" name="alamat_obj" style_type="width:80%" class="validasi" value="{$data.alamat_obj|default:''}" }
+		<tr>
+			<td>&nbsp;</td><td>FEE Penawaran</td><td>:</td>
+			<td style="font-weight:bold;">
+				Rp. <input type="text"  id="fee_projek_{$acak}" name="fee_projek" value="{$data.fee_projek|default:''}" style="width:50%;height:34px; border-color:#81e8ce" class=""/>
+				
+			</td>
+		</tr>
+		{include file="template/input_form.html" type='text' label="PPN(10%)" id="ppn" name="ppn" style_type="width:80%;height:34px;border-color:#81e8ce" class="validasi angka" value="{$data.ppn|default:''}" readonly="readonly" }
+		{include file="template/input_form.html" type='text' label="PPH(1.2%)" id="pph" name="pph" style_type="width:80%;height:34px;border-color:#81e8ce" class="validasi angka" value="{$data.pph|default:''}" readonly="readonly"  }
+		<tr>
+			<td>&nbsp;</td><td>FEE Marketing</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="text"  id="fee_marketing_{$acak}" name="fee_marketing" value="{$data.fee_marketing|default:''}" style="width:10%;height:34px;border-color:#81e8ce"  class="" />&nbsp;%
+				&nbsp;&nbsp;&nbsp;Rp. &nbsp;<input type="text"  id="fee_marketing_rp_{$acak}" name="fee_marketing_rp" value="{$data.fee_marketing_rp|default:''}" style="width:50%;height:34px;border-color:#81e8ce"  readonly class="angka"/>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>Commitment FEE</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="text"  id="comitmen_fee_{$acak}" name="comitmen_fee" value="{$data.comitmen_fee|default:''}" style="width:10%;height:34px;border-color:#81e8ce" class="" />&nbsp;%
+				&nbsp;&nbsp;&nbsp;Rp. &nbsp;<input type="text"  id="commitmen_fee_rp_{$acak}" name="commitmen_fee_rp" value="{$data.commitmen_fee_rp|default:''}" style="width:50%;height:34px;border-color:#81e8ce" readonly class="angka"/>
+			</td>
+		</tr>
+		
+		<!--tr>
+			<td>&nbsp;</td><td>Status</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="checkbox" name="flag" value="Y" checked>&nbsp;&nbsp;Aktif
+			</td>
+		</tr-->
+</table>
+	
+</form>
+<div class="control-group">
+	<center>
+	<label class="control-label" for="form-field-1"></label>
+	<div class="controls">
+		{include file="template/button_save.html" id_simpan="simpan_{$mod}" id_batal="batal_{$mod}" }
+	</div>
+	</center>
+</div>		
+</div>
+</fieldset>
+
+<script>
+	var idx_row={$jml_row|default:1};
+	$('#fee_projek_{$acak}').numberbox({
+		precision:2,
+		groupSeparator:',',
+		decimalSeparator:'.',
+		onChange:function(x,y){
+			console.log(x);
+			var ppn,pph;
+			ppn=((x*10)/100);
+			pph=((x*1.2)/100);
+			$('#ppn_{$acak}').numberbox('setValue',ppn);
+			$('#pph_{$acak}').numberbox('setValue',pph);
+			$('#fee_marketing_{$acak}').numberbox('setValue',0);
+			$('#fee_marketing_rp_{$acak}').numberbox('setValue',0);
+			$('#comitmen_fee_{$acak}').numberbox('setValue',0);
+			$('#commitmen_fee_rp_{$acak}').numberbox('setValue',0);
+		}
+	});
+	$('#fee_marketing_{$acak}').numberbox({
+		precision:2,
+		groupSeparator:',',
+		decimalSeparator:'.',
+		onChange:function(x,y){
+			console.log(x);
+			var fee;
+			fee=(($('#fee_projek_{$acak}').numberbox('getValue') * x)/100);
+			$('#fee_marketing_rp_{$acak}').numberbox('setValue',fee);
+		}
+	});
+	$('#comitmen_fee_{$acak}').numberbox({
+		precision:2,
+		groupSeparator:',',
+		decimalSeparator:'.',
+		onChange:function(x,y){
+			console.log(x);
+			var fee;
+			fee=(($('#fee_projek_{$acak}').numberbox('getValue') * x)/100);
+			$('#commitmen_fee_rp_{$acak}').numberbox('setValue',fee);
+		}
+	});
+	$('.angka').numberbox({
+		precision:2,
+		groupSeparator:',',
+		decimalSeparator:'.'
+	});
+	
+	$('#batal_{$mod}').click(function(){
+		$('#grid_nya_{$mod}').show();
+		$('#detil_nya_{$mod}').html('').hide();
+	});
+	
+	$('#simpan_{$mod}').click(function(){
+		submit_form('form_{$acak}',function(r){
+			if(r==1){
+				$.messager.alert('SURVEY',"Data Tersimpan",'info');
+				$('#grid_nya_{$mod}').show();
+				$('#detil_nya_{$mod}').html('').hide();
+				$('#grid_{$mod}').datagrid('reload');
+			}else{
+				$.messager.alert('SURVEY',"Data Gagal Tersimpan",'error');
+				console.log(r);
+			}
+		});
+
+	});
+</script>

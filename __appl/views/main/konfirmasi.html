@@ -1,0 +1,142 @@
+<div class="box box-primary">
+		<div class="box-header with-border">
+		 
+		</div>
+		<div class="box-body">
+			<!--table class="table table-bordered">
+				<thead style="background:#3C8DBC;color:#fff;">
+					<tr>
+						<th style="text-align:center;">No.</th>
+						<th style="text-align:left;">Item Isian</th>
+						<th style="text-align:center;">Status</th>
+						<th style="text-align:left;">Keterangan</th>
+					</tr>
+				</thead>
+				<tbody style="background:#D4E8F4;">
+					<tr>
+						<td style="text-align:center;">1.</td>
+						<td style="text-align:left;">AKTA</td>
+						<td style="text-align:center;">{if $data.AKTA.status|default:'-' eq 1}Lengkap{else if $data.AKTA.status|default:'-' eq 2}Tidak Lengkap{else}Belum Diverifikasi{/if}</td>
+						<td style="text-align:left;">{$data.AKTA.ket|default:'-'}</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;">2.</td>
+						<td style="text-align:left;">TDP</td>
+						<td style="text-align:center;">{if $data.TDP.status|default:'-' eq 1}Lengkap{else if $data.TDP.status|default:'-' eq 2}Tidak Lengkap{else}Belum Diverifikasi{/if}</td>
+						<td style="text-align:left;">{$data.TDP.ket|default:'-'}</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;">3.</td>
+						<td style="text-align:left;">DOMISILI</td>
+						<td style="text-align:center;">{if $data.DOMISILI.status|default:'-' eq 1}Lengkap{else if $data.DOMISILI.status|default:'-' eq 2}Tidak Lengkap{else}Belum Diverifikasi{/if}</td>
+						<td style="text-align:left;">{$data.DOMISILI.ket|default:'-'}</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;">4.</td>
+						<td style="text-align:left;">IJIN USAHA</td>
+						<td style="text-align:center;">{if $data.IJIN_USAHA.status|default:'-' eq 1}Lengkap{else if $data.IJIN_USAHA.status|default:'-' eq 2}Tidak Lengkap{else}Belum Diverifikasi{/if}</td>
+						<td style="text-align:left;">{$data.IJIN_USAHA.ket|default:'-'}</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;">5.</td>
+						<td style="text-align:left;">SBU</td>
+						<td style="text-align:center;">{if $data.SBU.status|default:'-' eq 1}Lengkap{else if $data.SBU.status|default:'-' eq 2}Tidak Lengkap{else}Belum Diverifikasi{/if}</td>
+						<td style="text-align:left;">{$data.SBU.ket|default:'-'}</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;">6.</td>
+						<td style="text-align:left;">UPLOAD DOKUMEN</td>
+						<td style="text-align:center;">{if $data.UPLOAD_DOK.status|default:'-' eq 1}Lengkap{else if $data.UPLOAD_DOK.status|default:'-' eq 2}Tidak Lengkap{else}Belum Diverifikasi{/if}</td>
+						<td style="text-align:left;">{$data.UPLOAD_DOK.ket|default:'-'}</td>
+					</tr>
+					
+					<tr>
+						<td style="text-align:center;">7.</td>
+						<td style="text-align:left;">PAJAK</td>
+						<td style="text-align:center;">{if $data.PAJAK.status|default:'-' eq 1}Lengkap{else if $data.PAJAK.status|default:'-' eq 2}Tidak Lengkap{else}Belum Diverifikasi{/if}</td>
+						<td style="text-align:left;">{$data.PAJAK.ket|default:'-'}</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;">8.</td>
+						<td style="text-align:left;">PENGURUS</td>
+						<td style="text-align:center;">{if $data.PENGURUS.status|default:'-' eq 1}Lengkap{else if $data.PENGURUS.status|default:'-' eq 2}Tidak Lengkap{else}Belum Diverifikasi{/if}</td>
+						<td style="text-align:left;">{$data.PENGURUS.ket|default:'-'}</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;">9.</td>
+						<td style="text-align:left;">TENAGA AHLI</td>
+						<td style="text-align:center;">{if $data.TA.status|default:'-' eq 1}Lengkap{else if $data.TA.status|default:'-' eq 2}Tidak Lengkap{else}Belum Diverifikasi{/if}</td>
+						<td style="text-align:left;">{$data.TA.ket|default:'-'}</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;">10.</td>
+						<td style="text-align:left;">PERALATAN</td>
+						<td style="text-align:center;">{if $data.PERALATAN.status|default:'-' eq 1}Lengkap{else if $data.PERALATAN.status|default:'-' eq 2}Tidak Lengkap{else}Belum Diverifikasi{/if}</td>
+						<td style="text-align:left;">{$data.PERALATAN.ket|default:'-'}</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;">11.</td>
+						<td style="text-align:left;">PENGALAMAN</td>
+						<td style="text-align:center;">{if $data.PENGALAMAN.status|default:'-' eq 1}Lengkap{else if $data.PENGALAMAN.status|default:'-' eq 2}Tidak Lengkap{else}Belum Diverifikasi{/if}</td>
+						<td style="text-align:left;">{$data.PENGALAMAN.ket|default:'-'}</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;">12.</td>
+						<td style="text-align:left;">PEKERJAAN BERJALAN</td>
+						<td style="text-align:center;">{if $data.PEKERJAAN_BERJALAN.status|default:'-' eq 1}Lengkap{else if $data.PEKERJAAN_BERJALAN.status|default:'-' eq 2}Tidak Lengkap{else}Belum Diverifikasi{/if}</td>
+						<td style="text-align:left;">{$data.PEKERJAAN_BERJALAN.ket|default:'-'}</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;">13.</td>
+						<td style="text-align:left;">ASPEK KEUANGAN</td>
+						<td style="text-align:center;">{if $data.KEUANGAN.status|default:'-' eq 1}Lengkap{else if $data.KEUANGAN.status|default:'-' eq 2}Tidak Lengkap{else}Belum Diverifikasi{/if}</td>
+						<td style="text-align:left;">{$data.KEUANGAN.ket|default:'-'}</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;">14.</td>
+						<td style="text-align:left;">SURAT PENTING</td>
+						<td style="text-align:center;">{if $data.SURAT.status|default:'-' eq 1}Lengkap{else if $data.SURAT.status|default:'-' eq 2}Tidak Lengkap{else}Belum Diverifikasi{/if}</td>
+						<td style="text-align:left;">{$data.SURAT.ket|default:'-'}</td>
+					</tr>
+				</tbody>
+			</table-->
+			<table class="table table-bordered table-hovered">
+			<thead style="background:#3C8DBC;color:#fff;">
+				<tr>
+					<th style="text-align:center;width:3%">No.</th>
+					<th style="text-align:left;">Dokumen</th>
+					<th style="text-align:center;width:10%">Status Verifikasi</th>
+					<!-- <th style="text-align:center;width:10%">Verifikasi Oleh</th> -->
+					<th style="text-align:center;width:40%">Hasil Verifikasi</th>
+				</tr>
+			</thead>
+			<tbody style="background:#D4E8F4;">
+				{foreach from=$data.jenis item=i name=x}
+				<tr>
+					<td style="text-align:center;">{$smarty.foreach.x.iteration}</td>
+					<td style="text-align:left;">{$i.dokumen}</td>
+					<td style="text-align:center;{if $i.sts_ver eq 0}background:red;color:navy;{/if}">
+						{if $i.sts_ver eq 2}
+							Belum Dilakukan Verifikasi
+						{elseif $i.sts_ver eq 1}
+							Lulus Verifikasi
+						{else}
+							Segera Lakukan Perbaikan
+						{/if}
+					</td>
+					<!-- <td style="text-align:center;">
+						{if isset($i.header_ver.ver_oleh)}
+						{$i.header_ver.ver_oleh|default:''} <br>tgl: {$i.header_ver.verifikasi_tgl|default:''}
+						{/if}
+					</td> -->
+					<td style="text-align:left;">
+						{foreach from=$i.detil_ver item=a name=z}
+							{$smarty.foreach.z.iteration}. {$a.kriteria} = {$a.pilihan} {if $a.keterangan|default:'-' !='-'}({$a.keterangan|default:'-'}){/if}<br>
+						{/foreach}
+					</td>
+				</tr>
+				{/foreach}
+			</tbody>
+		</table>
+		</div>
+	</div>

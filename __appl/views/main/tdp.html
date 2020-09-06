@@ -1,0 +1,158 @@
+<fieldset>
+	<legend>Form Input TDP/NIB</legend>
+<div class="span10">
+<form class="form-horizontal" id="form_{$acak}" url="{$host}modul/cruddata/{$mod}" method="post" enctype="multipart/form-data">
+<table class="table table-hover">
+		<input type="hidden" name="id" value="{$data.id|default:''}">
+		<input type="hidden" name="sts_crud" value="{$sts_crud|default:'add'}">
+		<tr>
+			<td>&nbsp;</td><td>Jenis Dokumen</td><td>:</td>
+			<td style="font-weight:bold;">
+				<select name="jenis_dokumen" id="jenis_dokumen_{$acak}" class="form-control validasi" style="width:80%">
+					<option value="1" {if $data.jenis_dokumen|default:'' eq 1}selected{/if}>TDP</option>
+					<option value="2" {if $data.jenis_dokumen|default:'' eq 2}selected{/if}>NIB</option>
+				</select>
+			</td>
+		</tr>
+		{include file="template/input_form.html" type='text' label="Nomor *" id="nomor" name="nomor" style_type="width:80%" class="validasi" value="{$data.nomor|default:''}"}
+		{include file="template/input_form.html" type='text' label="Instansi Penerbit *" id="instansi_penerbit" name="instansi_penerbit" style_type="width:80%" class="validasi" value="{$data.instansi_penerbit|default:''}"}
+		{include file="template/input_form.html" type='text' label="Tgl. Terbit *" id="tgl_terbit" name="tgl_terbit" style_type="width:30%" class="validasi tgl" value="{$data.tgl_terbit|default:''}"}
+		<tr class="tr_na">
+			<td>&nbsp;</td><td>Berlaku Sampai</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="text" class="form-control tgl validasi" style="width:80%" name="masa_berlaku" id="masa_berlaku_{$acak}" value="{$data.masa_berlaku|default:''}">
+			</td>
+		</tr>
+		{* {include file="template/input_form.html" type='text' label="Berlaku Sampai *" id="masa_berlaku" name="masa_berlaku" style_type="width:30%" class="validasi tgl" value="{$data.masa_berlaku|default:''}"} *}
+		{include file="template/input_form.html" type='textarea' label="Kegiatan Usaha *" id="kegiatan_usaha_pokok" name="kegiatan_usaha_pokok" style_type="width:80%" class="validasi" value="{$data.kegiatan_usaha_pokok|default:''}"}
+		{include file="template/input_form.html" type='file' label="Dokumen (pdf) **" id="file" name="file" style_type="width:80%" class=""}
+		{if $sts_crud|default:'add' eq 'edit'}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+			<td style="font-weight:bold;">
+				{if $data.file eq ''}
+				<a href="javascript:void(0);" onclick="lihat_file('{$tdp.file_tdp|default:''}','tdp_reg')">{$tdp.file_tdp|default:''}</a>
+				{else}
+				<a href="javascript:void(0);" onclick="lihat_file('{$data.file|default:''}','tdp')">{$data.file|default:''}</a>
+				{/if}
+			</td>
+		</tr>
+		{else}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File (Registrasi)</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="javascript:void(0);" onclick="lihat_file('{$tdp.file_tdp|default:''}','tdp_reg')">{$tdp.file_tdp|default:''}</a>
+			</td>
+		</tr>
+		{/if}
+		
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+			<td style="font-weight:bold;">
+				* Data harus diisi<br>
+				** Dokumen yang diupload adalah scan dokumen ASLI (Pdf), Bukan Fotokopi
+			</td>
+		</tr>
+		
+		<!--tr>
+			<td>&nbsp;</td><td>Status</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="checkbox" name="flag" value="Y" checked>&nbsp;&nbsp;Aktif
+			</td>
+		</tr-->
+</table>
+	
+</form>
+<div class="control-group">
+	<center>
+	<label class="control-label" for="form-field-1"></label>
+	<div class="controls">
+		{include file="template/button_save.html" id_na="simpan_{$mod}"  btn_goyz="true" text="Simpan / Update" style="display:none;"}
+		{include file="template/button_save.html" id_na="edit_{$mod}"  btn_goyz="true" text="Edit Data" style_btn="btn-danger {if $masa|default:0 eq 0}disabled{/if}"}
+	</div>
+	</center>
+</div>		
+</div>
+</fieldset>
+
+<script>
+	var idx_row={$jml_row|default:1};
+	
+	$('.tgl').datepicker({
+		 format: 'yyyy-mm-dd',
+		 autoclose: true
+	});
+	$("#form_{$acak}").each(function(){
+		$(this).find(':input').attr("disabled","disabled") //<-- Should return all input elements in that specific form.
+	});
+	$('#edit_{$mod}_{$acak}').click(function(){
+		$(this).hide();
+		$('#simpan_{$mod}_{$acak}').show();
+		$("#form_{$acak}").each(function(){
+			$(this).find(':input').removeAttr("disabled") //<-- Should return all input elements in that specific form.
+		});
+	});
+	$('#jenis_dokumen_{$acak}').change(function(){
+		if($(this).val()==2){
+			$('.tr_na').hide();
+			$('#masa_berlaku_{$acak}').removeClass('validasi');
+			$('#masa_berlaku_{$acak}').removeClass('validatebox-text');
+			$('#masa_berlaku_{$acak}').removeClass('validatebox-invalid');
+		}else{
+			$('.tr_na').show();
+			$('#masa_berlaku_{$acak}').addClass('validasi');
+			
+		}
+		$(".validasi").validatebox({ required:true }); 
+	});
+	$('#jenis_dokumen_{$acak}').trigger('change');
+	$('#simpan_{$mod}_{$acak}').click(function(){
+		$(".validasi").validatebox({ required:true }); 
+		if ($("#form_{$acak}").form('validate')){
+		// ajax
+		var uri = "{$host}modul/cruddata/{$mod}";
+		var formData = new FormData($("#form_{$acak}")[0]);
+		$.ajax({
+			url: uri,
+			type: "POST",
+			data : formData,
+			processData: false,
+			contentType: false,
+			beforeSend: function() {
+				loadingna();
+			},
+			success: function(data){
+				winLoadingClose();
+				if(data==1){
+					$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+					loadUrl('{$host}modul/get_konten/tdp');
+					$('.menu_{$mod}').removeClass('bg-red');
+					$('.menu_{$mod}').addClass('bg-green');
+				}else{
+					$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+				}
+				console.log(data);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+			}
+		});
+		// end ajax
+		}
+		// submit_form('form_{$acak}',function(r){
+		// 	if(r==1){
+		// 		winLoadingClose();
+		// 		$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+		// 		loadUrl('{$host}modul/get_konten/tdp');
+		// 		$('.menu_{$mod}').removeClass('bg-red');
+		// 		$('.menu_{$mod}').addClass('bg-green');
+		// 	}else{
+		// 		winLoadingClose();
+		// 		$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+		// 		console.log(r);
+		// 	}
+		// });
+
+	});
+</script>

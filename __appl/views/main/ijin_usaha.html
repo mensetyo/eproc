@@ -1,0 +1,360 @@
+<style>
+	.select2-container--default .select2-selection--single {
+		font-size: 14px;
+    	height: 34px;
+	}
+
+</style>
+<fieldset>
+	<legend>Form Input Ijin Usaha</legend>
+<div class="span10">
+<form class="form-horizontal" novalidate id="form_{$acak}" url="{$host}modul/cruddata/ijin_usaha" method="post" enctype="multipart/form-data">
+<table class="table table-hover">
+		<input type="hidden" name="id" value="{$data.id|default:''}">
+		<input type="hidden" name="sts_crud" value="{$sts_crud|default:'add'}">
+		<input type="hidden" id="call" value="1">
+		<!-- <input type="hidden" id="lvl2" value="{$lvl3.idlvl2|default:''}"> -->
+		<tr>
+			<td>&nbsp;</td><td>Jenis Dokumen</td><td>:</td>
+			<td style="font-weight:bold;">
+				<select name="jenis_dokumen" id="jenis_dokumen_{$acak}" class="form-control validasi" style="width:80%">
+					<option value="1" {if $data.jenis_dokumen|default:'' eq 1}selected{/if}>SIUP Lama</option>
+					<option value="2" {if $data.jenis_dokumen|default:'' eq 2}selected{/if}>SIUP Baru</option>
+				</select>
+			</td>
+		</tr>
+		{include file="template/input_form.html" type='text' label="Jenis Ijin *" id="jenis_ijin" name="jenis_ijin" style_type="width:80%" class="validasi" value="{$data.jenis_ijin|default:''}"}
+		{include file="template/input_form.html" type='text' label="Nomor Ijin *" id="nomor_surat" name="nomor_surat" style_type="width:80%" class="validasi" value="{$data.nomor_surat|default:''}"}
+		<tr class="tr_na">
+			<td>&nbsp;</td><td>Berlaku Sampai</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="text" class="form-control tgl validasi" style="width:80%" name="berlaku_sampai" id="berlaku_sampai_{$acak}" value="{$data.berlaku_sampai|default:''}">
+			</td>
+		</tr>
+		<!-- {* {include file="template/input_form.html" type='text' label="Berlaku Sampai *" id="berlaku_sampai" name="berlaku_sampai" style_type="width:30%" class="validasi tgl" value="{$data.berlaku_sampai|default:''}"} *} -->
+		{include file="template/input_form.html" type='text' label="Instansi Pemberi *" id="instansi_pemberi" name="instansi_pemberi" style_type="width:80%" class="validasi" value="{$data.instansi_pemberi|default:''}"}
+		<tr>
+			<td>&nbsp;</td><td>Kualifikasi</td><td>:</td>
+			<td style="font-weight:bold;">
+				<select name="kualifikasi" id="kualifikasi" class="form-control validasi" style="width:80%">
+					{foreach from = $kualifikasi item=i}
+					<option value="{$i.id}" {if $data.kualifikasi|default:'' eq $i.id}selected{/if}>{$i.kualifikasi}</option>
+					{/foreach}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>Kegiatan Usaha/KBLI </td><td>:</td>
+			<td style="font-weight:bold;">
+				<select name="m_klbi[]" class="form-control select2" style="width:80%;height33px;">
+					<option value="">-- Pilih --</option>
+					{foreach from=$m_klbi item=i}
+					<option value="{$i.kode}" {if $sts_crud|default:'add' eq 'edit'}{if $data_klbi.0.kode_klbi|default:'' eq $i.kode}selected{/if}{/if}>({$i.kode}){$i.description}</option>
+					{/foreach}
+                </select>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td>:</td>
+			<td style="font-weight:bold;">
+				<select name="m_klbi[]" class="form-control select2" style="width:80%;height33px;">
+					<option value="">-- Pilih --</option>
+					{foreach from=$m_klbi item=i}
+					<option value="{$i.kode}" {if $sts_crud|default:'add' eq 'edit'}{if $data_klbi.1.kode_klbi|default:'' eq $i.kode}selected{/if}{/if}>({$i.kode}) {$i.description}</option>
+					{/foreach}
+                </select>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td>:</td>
+			<td style="font-weight:bold;">
+				<select name="m_klbi[]" class="form-control select2" style="width:80%;height33px;">
+					<option value="">-- Pilih --</option>
+					{foreach from=$m_klbi item=i}
+					<option value="{$i.kode}" {if $sts_crud|default:'add' eq 'edit'}{if $data_klbi.2.kode_klbi|default:'' eq $i.kode}selected{/if}{/if}>({$i.kode}) {$i.description}</option>
+					{/foreach}
+                </select>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td>:</td>
+			<td style="font-weight:bold;">
+				<select name="m_klbi[]" class="form-control select2" style="width:80%;height33px;">
+					<option value="">-- Pilih --</option>
+					{foreach from=$m_klbi item=i}
+					<option value="{$i.kode}" {if $sts_crud|default:'add' eq 'edit'}{if $data_klbi.3.kode_klbi|default:'' eq $i.kode}selected{/if}{/if} >({$i.kode}) {$i.description}</option>
+					{/foreach}
+                </select>
+			</td>
+		</tr>
+		<!-- klasifikasi -->
+		<tr>
+			<td>&nbsp;</td><td>Klasifikasi</td><td>:</td>
+			<td style="font-weight:bold;" id="area_tmbh">
+				<div id="div_tmbh" style="display: flex;">
+					
+				</div>
+			</td>
+		</tr>
+
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td></td>
+			<td><a href="javascript:void(0);" class="btn btn-small btn-success" id="tmbh_klasifikasi" style="width: 22%;"><span>Tambah Klasifikasi</span></a></td>
+		</tr>
+				
+		{include file="template/input_form.html" type='textarea' label="Klasifikasi Lain" id="klasifikasi_lainnya" name="klasifikasi_lainnya" style_type="width:80%" class="" value="{$data.klasifikasi_lainnya|default:''}"}
+		{include file="template/input_form.html" type='file' label="Dokumen (pdf) **" id="dok" name="dok" style_type="width:80%" class=""}
+		{if $sts_crud|default:'add' eq 'edit'}
+			<tr>
+				<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+				<td style="font-weight:bold;">
+					{if $data.dok eq ''}
+					<a href="javascript:void(0);" onclick="lihat_file('{$siup.file_siup|default:''}','ijin_usaha_reg')">{$siup.file_siup|default:''}</a>
+					{else}
+					<a href="javascript:void(0);" onclick="lihat_file('{$data.dok|default:''}','ijin_usaha')">{$data.dok|default:''}</a>
+					
+					{/if}
+				</td>
+			</tr>
+		{else}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File (Registrasi)</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="javascript:void(0);" onclick="lihat_file('{$siup.file_siup|default:''}','ijin_usaha_reg')">{$siup.file_siup|default:''}</a>
+			</td>
+		</tr>
+		{/if}
+		
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+			<td style="font-weight:bold;">
+				* Data harus diisi<br>
+				** Dokumen yang diupload adalah scan dokumen ASLI (Pdf), Bukan Fotokopi
+			</td>
+		</tr>
+		
+		<!--tr>
+			<td>&nbsp;</td><td>Status</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="checkbox" name="flag" value="Y" checked>&nbsp;&nbsp;Aktif
+			</td>
+		</tr-->
+</table>
+</form>
+<div class="control-group">
+	<center>
+	<label class="control-label" for="form-field-1"></label>
+	<div class="controls">
+		{include file="template/button_save.html" id_na="simpan_{$mod}"  btn_goyz="true" text="Simpan / Update" style="display:none;"}
+		{include file="template/button_save.html" id_na="edit_{$mod}"  btn_goyz="true" text="Edit Data" style_btn="btn-danger {if $masa|default:0 eq 0}disabled{/if}"}
+	</div>
+	</center>
+</div>		
+
+</div>
+</fieldset>
+
+<script>
+	var idx_row={$jml_row|default:1};
+	//$(".validasi").validatebox({ required:true }); 
+	$('.tgl').datepicker({
+		 format: 'yyyy-mm-dd',
+		 autoclose: true
+	});
+	$('.angka').numberbox();
+	$('.select2').select2()
+	$("#form_{$acak}").each(function(){
+		$(this).find(':input').attr("disabled","disabled") //<-- Should return all input elements in that specific form.
+	});
+	$('#tmbh_klasifikasi').css('display','none');
+	$('#edit_{$mod}_{$acak}').click(function(){
+		$(this).hide();
+		$('#simpan_{$mod}_{$acak}').show();
+		$("#form_{$acak}").each(function(){
+			$(this).find(':input').removeAttr("disabled") //<-- Should return all input elements in that specific form.
+		});
+		$('#tmbh_klasifikasi').css('display','block');
+	});
+	$('#jenis_dokumen_{$acak}').change(function(){
+		if($(this).val()==2){
+			$('.tr_na').hide();
+			$('#berlaku_sampai_{$acak}').removeClass('validasi');
+			$('#berlaku_sampai_{$acak}').removeClass('validatebox-text');
+			$('#berlaku_sampai_{$acak}').removeClass('validatebox-invalid');
+		}else{
+			$('.tr_na').show();
+			$('#berlaku_sampai_{$acak}').addClass('validasi');
+		}
+	});
+	$('#jenis_dokumen_{$acak}').trigger('change');
+	$('#simpan_{$mod}_{$acak}').click(function(){
+		$(".validasi").validatebox({ required:true });
+		if ($('#form_{$acak}').form('validate')){
+		var formData = new FormData($("#form_{$acak}")[0]);
+		$.ajax({
+			url: "{$host}modul/cruddata/ijin_usaha",
+			type: "POST",
+			data : formData,
+			processData: false,
+			contentType: false,
+			beforeSend: function() {
+				loadingna();
+			},
+			success: function(data){
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+				loadUrl('{$host}modul/get_konten/ijin_usaha');
+				$('.menu_{$mod}').removeClass('bg-red');
+				$('.menu_{$mod}').addClass('bg-green');
+				console.log(data);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+			}
+		});
+		}
+	});
+
+	var x = 2;
+	$('#tmbh_klasifikasi').click(function(e) {
+		e.preventDefault();
+		
+		$('#call').val(x);
+		var konten = '';
+		konten ='<div style="display: flex;">'+
+			'<select name="klasilvl1[]" nilai="'+x+'" id="klasilvl1_'+x+'" class="form-control select2 klasilvl1" style="margin-top:5px;width:25%;float: left;border-radius: 5px;">'+
+				'<option value="0">--Pilih Level 1--</option>'+
+				'{foreach from = $klasifikasi item=i}'+
+				'<option value="{$i.id}">{$i.klasifikasi_perusahaan}</option>'+
+				'{/foreach}'+
+			'</select>'+
+			'<select name="klasilvl2[]" nilai="'+x+'" id="klasilvl2_'+x+'" class="form-control select2 klasilvl2" style="margin-top:5px;float: left;margin-left: 4px;border-radius: 5px;width:25%;height34px;">'+
+				'<option value="0">Data Kosong</option>'+
+			'</select>'+
+			'<select name="klasilvl3[]" id="klasilvl3_'+x+'" class="form-control select2 klasilvl3" style="margin-top:5px;float: left;margin-left: 4px;border-radius: 5px;width:25%;height33px;">'+
+				'<option value="0">Data Kosong</option>'+
+			'</select>'+
+			'<a href="javascript:void(0);" class="btn btn-small btn-warning" id="hps_klasifikasi" style="margin-top:5px;margin-left:2px"><span>X</span></a></div>';
+		$('#area_tmbh').append(konten); 
+		x++; 
+		
+	});
+	
+	$('#area_tmbh').on('click', '#hps_klasifikasi', function(e) {
+		e.preventDefault();
+        $(this).parent('div').remove();
+	
+	});
+
+	{literal}
+	$(document).on('change','.klasilvl1',function(){
+		var idlevel = $(this).val();
+		var id = $(this).attr('nilai');
+		var url = '/modul/getdata/kalsifikasi_l2';
+		$.ajax({
+			type: 'POST',
+			url: url,
+			data:{idlevel1:idlevel},
+			success: function (data) {
+				var jsonData = $.parseJSON(data);
+				var html = '<option value="0">--Pilih Level 2--</option>';
+				if(jsonData,jsonData.length==0){
+					html = '<option value="0">Data Kosong</option>';
+				}else{
+					for(i=0; i< jsonData.length; i++){
+						html += '<option value='+jsonData[i].id+'>'+jsonData[i].level2+'</option>';
+					}
+				}
+				$('#klasilvl2_'+id).html(html);
+				// if(lvl2!=''){
+				// 	$("#klasilvl2 option[value="+lvl2+"]").attr('selected',true);
+				// }
+				
+			}
+		});
+	})
+
+	$(document).on('change','.klasilvl2',function(){
+		var idlevel2 = $(this).val();
+		var id = $(this).attr('nilai');
+		var idlevel1 = $('#klasilvl1_'+id+' option:selected').val();
+		var url = '/modul/getdata/kalsifikasi_l3';
+		$.ajax({
+			type: 'POST',
+			url: url,
+			data:{idlevel1:idlevel1,idlevel2:idlevel2},
+			success: function (data) {
+				var jsonData = $.parseJSON(data);
+				var html = '<option value="0">--Pilih Level 3--</option>';
+				if(jsonData,jsonData.length==0){
+					html = '<option value="0">Data Kosong</option>';
+				}else{
+					for(i=0; i< jsonData.length; i++){
+						html += '<option value='+jsonData[i].id+'>'+jsonData[i].level3+'</option>';
+					}
+				}
+				$('#klasilvl3_'+id).html(html);
+			}
+		});
+	})
+	{/literal}
+	$('#klasilvl1_1').trigger('change');
+	$('#klasilvl2_1').trigger('change');
+
+	loadData();
+	function loadData(){
+		var url = '/modul/getdata/getData';
+		var konten = '';
+		$.ajax({
+			url: url,
+			success: function (data) {
+				var jsonData = $.parseJSON(data);
+				
+				if(jsonData.length!=0){
+					for(i=0; i< jsonData.length; i++){
+						konten ='<div style="display: flex;">'+
+						'<select disabled name="klasilvl1[]" nilai="'+i+'" id="klasilvl1_'+i+'" class="form-control select2 klasilvl1" style="width:29%;float: left;border-radius: 5px;">'+
+							'<option value="0">--Pilih Level 1--</option>'+
+							'{foreach from = $klasifikasi item=i}'+
+							'<option value="{$i.id}">{$i.klasifikasi_perusahaan}</option>'+
+							'{/foreach}'+
+						'</select>'+
+						'<select disabled name="klasilvl2[]" nilai="'+i+'" id="klasilvl2_'+i+'" class="form-control select2 klasilvl2" style="float: left;margin-left: 4px;border-radius: 5px;width:25%;height34px;">'+
+							'<option value="0">--Pilih Level 2--</option>'+
+							'{foreach from = $klasifikasi1 item=i}'+
+							'<option value="{$i.id}">{$i.level2}</option>'+
+							'{/foreach}'+
+						'</select>'+
+						'<select disabled  name="klasilvl3[]" id="klasilvl3_'+i+'" class="form-control select2 klasilvl3" style="float: left;margin-left: 4px;border-radius: 5px;width:25%;height33px;">'+
+							'<option value="0">--Pilih Level 3--</option>'+
+							'{foreach from = $klasifikasi2 item=i}'+
+							'<option value="{$i.id}">{$i.level3}</option>'+
+							'{/foreach}'+
+						'</select>';
+						$('#area_tmbh').append(konten);
+						$("#klasilvl1_"+i+" option[value="+jsonData[i].level1+"]").attr('selected', 'selected');
+						$("#klasilvl2_"+i+" option[value="+jsonData[i].level2+"]").attr('selected', 'selected');
+						$("#klasilvl3_"+i+" option[value="+jsonData[i].level3+"]").attr('selected', 'selected');
+					}
+					 
+				}else{	
+					konten ='<div style="display: flex;">'+
+						'<select disabled name="klasilvl1[]" nilai="'+(x-1)+'" id="klasilvl1_'+(x-1)+'" class="form-control select2 klasilvl1" style="width:29%;float: left;border-radius: 5px;">'+
+							'<option value="0">--Pilih Level 1--</option>'+
+							'{foreach from = $klasifikasi item=i}'+
+							'<option value="{$i.id}">{$i.klasifikasi_perusahaan}</option>'+
+							'{/foreach}'+
+						'</select>'+
+						'<select disabled name="klasilvl2[]" nilai="'+(x-1)+'" id="klasilvl2_'+(x-1)+'" class="form-control select2 klasilvl2" style="float: left;margin-left: 4px;border-radius: 5px;width:25%;height34px;">'+
+							'<option value="0">Data Kosong</option>'+
+						'</select>'+
+						'<select disabled  name="klasilvl3[]" id="klasilvl3_'+(x-1)+'" class="form-control select2 klasilvl3" style="float: left;margin-left: 4px;border-radius: 5px;width:25%;height33px;">'+
+							'<option value="0">Data Kosong</option>'+
+						'</select>';
+					$('#area_tmbh').append(konten); 
+				}
+			}
+		});
+	}
+</script>

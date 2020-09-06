@@ -1,0 +1,145 @@
+<fieldset>
+	<legend>Form Input Aspek Keuangan</legend>
+<div class="span10">
+<form class="form-horizontal" id="form_{$acak}" url="{$host}modul/cruddata/{$mod}" method="post" enctype="multipart/form-data">
+<table class="table table-hover">
+		<input type="hidden" name="id" value="{$data.id|default:''}">
+		<input type="hidden" name="sts_crud" value="{$sts_crud|default:'add'}">
+		<!--input type="hidden" name="uraian_2" value="{$uraian_2|default:'Wajar'}"-->
+		<tr>
+			<td>&nbsp;</td><td>Tahun</td><td>:</td>
+			<td style="font-weight:bold;">
+				<select name="thn" id="thn" class="form-control validasi" style="width:10%" >
+					{for $i=($smarty.now|date_format:"%Y" - 3) to $smarty.now|date_format:"%Y"}
+						<option value="{$i}" {if $data.thn|default:"" eq $i}selected{/if}>{$i}</option>
+					{/for}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>Laporan Keuangan</td><td>:</td>
+			<td style="font-weight:bold;">
+				<select name="uraian_1" id="uraian_1" class="form-control validasi" style="width:50%" >
+						<option value="Audited" {if $data.uraian_1|default:"" eq "Audited"}selected{/if}>Audited</option>
+						<option value="In house" {if $data.uraian_1|default:"" eq "In house"}selected{/if}>In house</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td>Opini Auditor</td><td>:</td>
+			<td style="font-weight:bold;">
+				<select name="uraian_2" id="uraian_2" class="form-control validasi" style="width:50%" >
+						<option value="Wajar" {if $data.uraian_2|default:"" eq "Wajar"}selected{/if}>Wajar</option>
+						<option value="Tidak Wajar" {if $data.uraian_2|default:"" eq "Tidak Wajar"}selected{/if}>Tidak Wajar</option>
+				</select>
+			</td>
+		</tr>
+		{include file="template/input_form.html" type='text' label="Kas/Bank *" id="uraian_3" name="uraian_3" style_type="width:80%;;height:30px;" class="validasi angka" value="{$data.uraian_3|default:''}"}
+		{include file="template/input_form.html" type='text' label="Total Hutang (Total Debt) *" id="uraian_4" name="uraian_4" style_type="width:80%;;height:30px;" class="validasi angka" value="{$data.uraian_4|default:''}"}
+		{include file="template/input_form.html" type='text' label="Total Ekuitas (Total Equity) *" id="uraian_5" name="uraian_5" style_type="width:80%;;height:30px;" class="validasi angka" value="{$data.uraian_5|default:''}"}
+		{include file="template/input_form.html" type='text' label="Total Aktiva Lancar (Current Asset) *" id="uraian_6" name="uraian_6" style_type="width:80%;;height:30px;" class="validasi angka" value="{$data.uraian_6|default:''}"}
+		{include file="template/input_form.html" type='text' label="Total Hutang Lancar (Current Liabilities) *" id="uraian_7" name="uraian_7" style_type="width:80%;;height:30px;" class="validasi angka" value="{$data.uraian_7|default:''}"}
+		{include file="template/input_form.html" type='file' label="Upload Laporan Keuangan (pdf) *" id="file" name="file" style_type="width:80%" class="{if $sts_crud|default:'add' eq 'add'}validasi{/if}" }
+		{if $sts_crud|default:'add' eq 'edit'}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="javascript:void(0);" onclick="lihat_file('{$data.file|default:''}','aspek_keu')">{$data.file|default:''}</a>
+			</td>
+		</tr>
+		{/if}
+		
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+			<td style="font-weight:bold;">
+				* Data harus diisi<br>
+				
+			</td>
+		</tr>
+		
+		<!--tr>
+			<td>&nbsp;</td><td>Status</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="checkbox" name="flag" value="Y" checked>&nbsp;&nbsp;Aktif
+			</td>
+		</tr-->
+</table>
+	
+</form>
+<div class="control-group">
+	<center>
+	<label class="control-label" for="form-field-1"></label>
+	<div class="controls">
+		{if $masa|default:0 eq 1}
+		{include file="template/button_save.html" id_simpan="simpan_{$mod}" id_batal="batal_{$mod}" }
+		{/if}
+	</div>
+	</center>
+</div>		
+</div>
+</fieldset>
+
+<script>
+	var idx_row={$jml_row|default:1};
+	$(".validasi").validatebox({ required:true }); 
+	$('.tgl').datepicker({
+		 format: 'yyyy-mm-dd',
+		 autoclose: true
+	});
+	$('.angka').numberbox({
+		precision:2,
+		groupSeparator:',',
+		decimalSeparator:'.'
+	});
+	$('#uraian_1').change(function(){
+		if($(this).val()=='Audited'){
+			$('#uraian_2').removeAttr("disabled");
+			
+		}else{
+			$('#uraian_2').attr("disabled","disabled");
+		}
+	})
+	$('#batal_{$mod}').click(function(){
+		$('#grid_nya_{$mod}').show();
+		$('#detil_nya_{$mod}').html('').hide();
+	});
+	
+	$('#simpan_{$mod}').click(function(){
+		var uraian_3 = $('input[name="uraian_3"]').val();
+		var uraian_4 = $('input[name="uraian_4"]').val();
+		var uraian_5 = $('input[name="uraian_5"]').val();
+		var uraian_6 = $('input[name="uraian_6"]').val();
+		var uraian_7 = $('input[name="uraian_7"]').val();
+		if(uraian_3==''){
+			winLoadingClose();
+			$.messager.alert('EPROC-APP','Kas/Bank Harap di Isi', 'error');
+		}else if(uraian_4==''){
+			winLoadingClose();
+			$.messager.alert('EPROC-APP','Total Hutang Harap di Isi', 'error');
+		}else if(uraian_5==''){
+			winLoadingClose();
+			$.messager.alert('EPROC-APP','Total Ekuitas Harap di Isi', 'error');
+		}else if(uraian_6==''){
+			winLoadingClose();
+			$.messager.alert('EPROC-APP','Total Aktiva Lancar di Isi', 'error');
+		}else if(uraian_7==''){
+			winLoadingClose();
+			$.messager.alert('EPROC-APP','Total Hutang Lancar di Isi', 'error');
+		}else{
+			submit_form('form_{$acak}',function(r){
+				if(r==1){
+					winLoadingClose();
+					$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+					$('#grid_nya_{$mod}').show();
+					$('#detil_nya_{$mod}').html('').hide();
+					$('#grid_{$mod}').datagrid('reload');
+				}else{
+					winLoadingClose();
+					$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+					console.log(r);
+				}
+			});
+		}
+
+	});
+</script>

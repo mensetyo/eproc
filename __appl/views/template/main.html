@@ -1,0 +1,22 @@
+{assign var=buttonnya value='true'}
+{assign var=periode value='false'}
+{assign var=filter_core value='false'}
+{assign var=button_add value='true'}
+{assign var=button_edit value='true'}
+{assign var=button_delete value='true'}
+{assign var=button_import value='true'}
+
+{if $masa|default:0 eq 0}
+{assign var=button_add value='false'}
+{assign var=button_edit value='false'}
+{assign var=button_delete value='false'}
+{/if}
+
+{if $mod eq 'rekening'}
+	{assign var=buttonnya value='false'}
+	
+{/if}
+
+{if $main eq 'responden'}{assign var=button_add value='false'}{assign var=button_edit value='false'}{assign var=button_delete value='false'}{/if}
+
+{include file="template/grid.html" main={$main} mod={$mod} button={$buttonnya} table={$table|default:''} filter_satker={$filter_satker|default:''} filter_core={$filter_core|default:'true'}  filter_periode={$periode|default:''} }

@@ -1,0 +1,134 @@
+<fieldset>
+	<legend>Form Input Pengalaman</legend>
+<div class="span10">
+<form class="form-horizontal" id="form_{$acak}" url="{$host}modul/cruddata/{$mod}" method="post" enctype="multipart/form-data">
+<table class="table table-hover">
+		<input type="hidden" name="id" value="{$data.id|default:''}">
+		<input type="hidden" name="sts_crud" value="{$sts_crud|default:'add'}">
+		
+		{include file="template/input_form.html" type='text' label="Nama kontrak *" id="nama_kontrak" name="nama_kontrak" style_type="width:80%" class="validasi" value="{$data.nama_kontrak|default:''}"}
+		{include file="template/input_form.html" type='text' label="Lokasi *" id="lokasi" name="lokasi" style_type="width:80%" class="validasi" value="{$data.lokasi|default:''}"}
+		{include file="template/input_form.html" type='text' label="Instansi *" id="instansi" name="instansi" style_type="width:80%" class="validasi" value="{$data.instansi|default:''}"}
+		{include file="template/input_form.html" type='textarea' label="Alamat " id="alamat" name="alamat" style_type="width:80%" class="" value="{$data.alamat|default:''}"}
+		{include file="template/input_form.html" type='text' label="Telp " id="telepon" name="telepon" style_type="width:80%" class="" value="{$data.telepon|default:''}"}
+		{include file="template/input_form.html" type='text' label="Nomor Kontrak " id="nomor_kontrak" name="nomor_kontrak" style_type="width:80%" class="" value="{$data.nomor_kontrak|default:''}"}
+		<tr>
+			<td>&nbsp;</td><td>Jenis Mata Uang</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="radio" name="jenis_mata_uang" id="jenis_mata_uang" value="Rp" {if $sts_crud eq 'add'}checked{else}{if $data.jenis_mata_uang eq 'Rp'}checked{/if}{/if}>&nbsp;Rp (Rupiah)&nbsp;&nbsp;
+				<input type="radio" name="jenis_mata_uang" id="jenis_mata_uang" value="$" {if $sts_crud eq 'edit'}{if $data.jenis_mata_uang eq '$'}checked{/if}{/if}>&nbsp;$ (Dollar)
+			</td>
+		</tr>
+		{include file="template/input_form.html" type='text' label="Nilai Kontrak * " id="nilai_kontrak" name="nilai_kontrak" style_type="width:80%;;height:30px;" class="angka" value="{$data.nilai_kontrak|default:''}"}
+		{include file="template/input_form.html" type='text' label="Nilai Share Badan(%) " id="persen_sharing" name="persen_sharing" style_type="width:10%;;height:30px;" class="angka2" value="{$data.persen_sharing|default:''}"}
+		{include file="template/input_form.html" type='text' label="Nominal Sharing (Rp) " id="nilai_project" name="nilai_project" style_type="width:50%;;height:30px;" class="angka" value="{$data.nilai_project|default:''}"}
+		{include file="template/input_form.html" type='text' label="Tgl. Pelaksanaan " id="tanggal_pelaksanaan" name="tanggal_pelaksanaan" style_type="width:30%" class="tgl" value="{$data.tanggal_pelaksanaan|default:''}"}
+		{include file="template/input_form.html" type='text' label="Persen Pelaksanaan(%) " id="persentase_pelaksanaan" name="persentase_pelaksanaan" style_type="width:10%;;height:30px;" class="persen" value="{$data.persentase_pelaksanaan|default:''}"}
+		{include file="template/input_form.html" type='text' label="Selesai Kontrak " id="selesai_kontrak" name="selesai_kontrak" style_type="width:80%" class="tgl" value="{$data.selesai_kontrak|default:''}"}
+		{include file="template/input_form.html" type='text' label="Tgl. Serah Terima " id="tanggal_pelaksanaan" name="tanggal_serah_terima" style_type="width:30%" class="tgl" value="{$data.tanggal_serah_terima|default:''}"}
+		{include file="template/input_form.html" type='textarea' label="Keterangan " id="keterangan" name="keterangan" style_type="width:80%" class="" value="{$data.keterangan|default:''}"}
+		{include file="template/input_form.html" type='file' label="Dokumen (pdf) **" id="file" name="file" style_type="width:80%" class="{if $sts_crud|default:'add' eq 'add'}validasi{/if}" }
+		{if $sts_crud|default:'add' eq 'edit'}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="javascript:void(0);" onclick="lihat_file('{$data.file|default:''}','pengalaman')">{$data.file|default:''}</a>
+			</td>
+		</tr>
+		{/if}
+		
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+			<td style="font-weight:bold;">
+				* Data harus diisi<br>
+				** Dokumen yang diupload adalah scan dokumen ASLI, Bukan Fotokopi
+			</td>
+		</tr>
+		
+		<!--tr>
+			<td>&nbsp;</td><td>Status</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="checkbox" name="flag" value="Y" checked>&nbsp;&nbsp;Aktif
+			</td>
+		</tr-->
+</table>
+	
+</form>
+<div class="control-group">
+	<center>
+	<label class="control-label" for="form-field-1"></label>
+	<div class="controls">
+		{if $masa|default:0 eq 1}
+		{include file="template/button_save.html" id_simpan="simpan_{$mod}" id_batal="batal_{$mod}" }
+		{/if}
+	</div>
+	</center>
+</div>		
+</div>
+</fieldset>
+
+<script>
+	var idx_row={$jml_row|default:1};
+	$(".validasi").validatebox({ required:true }); 
+	$('.tgl').datepicker({
+		 format: 'yyyy-mm-dd',
+		 autoclose: true
+	});
+	$('.angka').numberbox({
+		precision:2,
+		groupSeparator:',',
+		decimalSeparator:'.'
+	});
+	$('.persen').numberbox({
+		precision:2,
+		groupSeparator:',',
+		decimalSeparator:'.',
+		max:100,
+		min:0
+		
+	});
+	$('.angka2').numberbox({
+		precision:2,
+		groupSeparator:',',
+		decimalSeparator:'.',
+		max:100,
+		min:0,
+		onChange:function(x,y){
+			var nilai=(x*parseFloat($('#nilai_kontrak_{$acak}').numberbox('getValue'))/100)
+			$('#nilai_project_{$acak}').numberbox('setValue',nilai);
+		}
+	});
+	$('#batal_{$mod}').click(function(){
+		$('#grid_nya_{$mod}').show();
+		$('#detil_nya_{$mod}').html('').hide();
+	});
+	
+	$('#simpan_{$mod}').click(function(){
+		var nilai_kontrak = $('input[name="nilai_kontrak"]').val();
+		var persen_sharing = $('input[name="persen_sharing"]').val();
+		var nilai_project = $('input[name="nilai_project"]').val();
+		if(nilai_kontrak=='')
+		{
+			winLoadingClose();
+			$.messager.alert('EPROC-APP','Nilai Kontrak Harap di Isi', 'error');
+		}else if(persen_sharing==''){
+			winLoadingClose();
+			$.messager.alert('EPROC-APP','Nilai Share Badan Harap di Isi', 'error');
+		}else{
+			submit_form('form_{$acak}',function(r){
+				if(r==1){
+					winLoadingClose();
+					$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+					$('#grid_nya_{$mod}').show();
+					$('#detil_nya_{$mod}').html('').hide();
+					$('#grid_{$mod}').datagrid('reload');
+				}else{
+					winLoadingClose();
+					$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+					console.log(r);
+				}
+			});
+		}
+
+	});
+</script>

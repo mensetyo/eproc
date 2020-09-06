@@ -1,0 +1,275 @@
+<section class="sidebar">
+
+	  <!--div class="user-panel">
+        <div class="pull-left image">
+          <img src="{$host}/__assets/img/avatar.png" class="img-circle"  alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>{$auth.nm_perusahaan}</p>
+          
+        </div>
+      </div-->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">&nbsp;</li>
+		<li>
+          <a href="{$host}modul">
+            <i class="fa fa-dashboard"></i> <span>Home</span>
+            <span class="pull-right-container">
+			
+            </span>
+          </a>
+        </li>
+		<li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/get_konten/data_perusahaan');$('#judul_kecil').html('Data Perusahaan')">
+            <i class="fa fa-database"></i> <span>Data Perusahaan</span>
+            <span class="pull-right-container">
+			<small class="label pull-right {if $flag.DATA_PERUSAHAAN.jml > 0}bg-green{else}bg-red{/if} menu_data_perusahaan">&nbsp;</small>
+            </span>
+          </a>
+        </li>
+		<!--li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/get_konten/legalitas');$('#judul_kecil').html('Legalitas Perusahaan')">
+            <i class="fa fa-database"></i> <span>Legalitas Perusahaan</span>
+            <span class="pull-right-container">
+				<small class="label pull-right {if $flag.AKTA > 0}bg-green{else}bg-red{/if} menu_akta">&nbsp;</small>
+            </span>
+          </a>
+        </li-->
+		{if $auth.tipe_perusahaan !=9}
+		<li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/get_konten/akta');$('#judul_kecil').html('Akta Perusahaan')" flag="AKTA" tabel="drt_akta">
+            <i class="fa fa-database"></i> <span>Akta</span>
+            <span class="pull-right-container">
+				<small class="label pull-right 
+					{if $flag.AKTA.sts eq -1}
+						{if $flag.AKTA.jml > 0}
+							bg-green
+						{else}
+							bg-red
+						{/if}
+					{else}
+						{if $flag.AKTA.sts eq 1}bg-blue
+						{else}bg-yellow
+						{/if}
+					{/if} menu_akta">&nbsp;
+				</small>
+            </span>
+          </a>
+        </li>
+		
+		<li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/get_konten/tdp');$('#judul_kecil').html('TDP/NIB DATA')" flag="TDP_lanjutan" tabel="drt_tdp">
+            <i class="fa fa-database"></i> <span>TDP/NIB</span>
+            <span class="pull-right-container">
+				<small class="label pull-right 
+					{if $flag.TDP.sts eq -1}
+						{if $flag.TDP.jml > 0}bg-green{else}bg-red{/if}
+					{else}
+						{if $flag.TDP.sts eq 1}bg-blue
+						{else}bg-yellow
+						{/if}
+					{/if} menu_tdp">&nbsp;
+				</small>
+            </span>
+          </a>
+        </li>
+		
+		<li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/get_konten/domisili');$('#judul_kecil').html('Data Domisili/Ijin Lokasi')" flag="DOMISILI" tabel="drt_domisili">
+            <i class="fa fa-database"></i> <span>Domisili/Ijin Lokasi</span>
+            <span class="pull-right-container">
+				<small class="label pull-right 
+					{if $flag.DOMISILI.sts eq -1}
+						{if $flag.DOMISILI.jml > 0}bg-green{else}bg-red{/if}
+					{else}
+						{if $flag.DOMISILI.sts eq 1}bg-blue
+						{else}bg-yellow
+						{/if}
+					{/if} menu_domisili">&nbsp;
+				</small>
+            </span>
+          </a>
+        </li>
+		{/if}
+		<li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/get_konten/ijin_usaha');$('#judul_kecil').html('Data Ijin Usaha')" flag="IJIN_USAHA" tabel="drt_ijin_usaha">
+            <i class="fa fa-database"></i> <span>Ijin Usaha (SIUP)</span>
+            <span class="pull-right-container">
+				<small class="label pull-right 
+					{if $flag.IJIN_USAHA.sts eq -1}
+						{if $flag.IJIN_USAHA.jml > 0}bg-green{else}bg-red{/if} 
+					{else}
+						{if $flag.IJIN_USAHA.sts eq 1}bg-blue
+						{else}bg-yellow
+						{/if}
+					{/if} menu_ijin_usaha">&nbsp;
+				</small>
+            </span>
+          </a>
+        </li>
+		{if $auth.tipe_perusahaan !=9}
+		<li>
+          <!--a href="javascript:void(0);" onclick="loadUrl('{$host}modul/get_konten/sbu');$('#judul_kecil').html('Data SBU')"-->
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/modul/sbu/main');$('#judul_kecil').html('Data SBU')" flag="SBU" tabel="drt_sbu">
+            <i class="fa fa-database"></i> <span>SBU</span>
+            <!--span class="pull-right-container">
+				<small class="label pull-right bg-yellow menu_sbu">&nbsp;</small>
+            </span-->
+          </a>
+        </li>
+		{/if}
+		<li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/get_konten/upload_dok');$('#judul_kecil').html('Download & Upload Dokumen')" flag="UPLOAD_DOK" tabel="drt_soft_copy">
+            <i class="fa fa-database"></i> <span>Upload Dokumen</span>
+            <span class="pull-right-container">
+				<small class="label pull-right 
+					{if $flag.UPLOAD_DOK.sts eq -1}
+					{if $flag.UPLOAD_DOK.jml > 0}bg-green{else}bg-red{/if} 
+					{else}
+						{if $flag.UPLOAD_DOK.sts eq 1}bg-blue
+						{else}bg-yellow
+						{/if}
+					{/if} menu_upload_dok">&nbsp;
+				</small>
+            </span>
+          </a>
+        </li>
+		
+		<li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/modul/pajak/main');$('#judul_kecil').html('Data Pajak')" flag="PAJAK" tabel="drt_pajak">
+            <i class="fa fa-database"></i> <span>Pajak</span>
+            <span class="pull-right-container">
+				<small class="label pull-right 
+					{if $flag.PAJAK.sts eq -1}
+					{if $flag.PAJAK.jml > 0}bg-green{else}bg-red{/if} 
+					{else}
+						{if $flag.PAJAK.sts eq 1}bg-blue
+						{else}bg-yellow
+						{/if}
+					{/if} menu_pajak">&nbsp;
+				</small>
+            </span>
+          </a>
+        </li>
+		{if $auth.tipe_perusahaan !=9}
+		<li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/modul/pengurus/main');$('#judul_kecil').html('Data Pengurus Perusahaan')" flag="PENGURUS" tabel="drt_pengurus">
+            <i class="fa fa-database"></i> <span>Pengurus Perusahaan</span>
+            <span class="pull-right-container">
+				<small class="label pull-right 
+					{if $flag.PENGURUS.sts eq -1}
+						{if $flag.PENGURUS.jml > 0}bg-green{else}bg-red{/if} 
+					{else}
+						{if $flag.PENGURUS.sts eq 1}bg-blue
+						{else}bg-yellow
+						{/if}
+					{/if} menu_pengurus">&nbsp;
+				</small>
+            </span>
+          </a>
+        </li>
+		{/if}
+		<li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/modul/ta/main');$('#judul_kecil').html('Data Tenaga Ahli Perusahaan')" flag="TA" tabel="drt_tenaga_ahli">
+            <i class="fa fa-database"></i> <span>Tenaga Ahli</span>
+            <span class="pull-right-container">
+				<small class="label pull-right 
+					{if $flag.TA.sts eq -1}
+					{if $flag.TA.jml > 0}bg-green{else}bg-red{/if} 
+					{else}
+						{if $flag.TA.sts eq 1}bg-blue
+						{else}bg-yellow
+						{/if}
+					{/if} menu_ta">&nbsp;
+				</small>
+            </span>
+          </a>
+        </li>
+		{if $auth.tipe_perusahaan !=9}
+		<li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/modul/peralatan/main');$('#judul_kecil').html('Data Peralatan Perusahaan')" flag="PERALATAN" tabel="drt_peralatan">
+            <i class="fa fa-database"></i> <span>Peralatan</span>
+            <!--span class="pull-right-container">
+				<small class="label pull-right {if $flag.PERALATAN > 0}bg-green{else}bg-red{/if} menu_peralatan">&nbsp;</small>
+            </span-->
+          </a>
+        </li>
+		
+		<li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/modul/pengalaman/main');$('#judul_kecil').html('Data Pengalaman Perusahaan')" flag="PENGALAMAN" tabel="drt_pengalaman">
+            <i class="fa fa-database"></i> <span>Pengalaman</span>
+            <span class="pull-right-container">
+			<small class="label pull-right 
+				{if $flag.PENGALAMAN.sts eq -1}
+				{if $flag.PENGALAMAN.jml > 0}bg-green{else}bg-red{/if} 
+				{else}
+					{if $flag.PENGALAMAN.sts eq 1}bg-blue
+					{else}bg-yellow
+					{/if}
+				{/if} menu_pengalaman">&nbsp;
+			</small>
+            </span>
+          </a>
+        </li>
+		{/if}
+		<li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/modul/pekerjaan_berjalan/main');$('#judul_kecil').html('Data Pekerjaan Berjalan Perusahaan')" flag="PEKERJAAN_BERJALAN" tabel="drt_pekerjaan_on_going">
+            <i class="fa fa-database"></i> <span>Pekerjaaan Berjalan</span>
+            <span class="pull-right-container">
+			<small class="label pull-right 
+				{if $flag.PEKERJAAN_BERJALAN.sts eq -1}
+				{if $flag.PEKERJAAN_BERJALAN.jml > 0}bg-green{else}bg-red{/if} 
+				{else}
+					{if $flag.PEKERJAAN_BERJALAN.sts eq 1}bg-blue
+					{else}bg-yellow
+					{/if}
+				{/if} menu_pekerjaan_berjalan">&nbsp;
+			</small>
+            </span>
+          </a>
+        </li>
+		{if $auth.tipe_perusahaan !=9}
+		<li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/modul/keuangan/main');
+				$('#judul_kecil').html('Data Aspek Keuangan Perusahaan <br><small>Perhatian : Laporan Keuangan 2 tahun terakhir dari tahun pelaksanaan Evaluasi DRT berlangsung</small>')" flag="KEUANGAN" tabel="drt_lapkeu_aspek">
+            <i class="fa fa-database"></i> <span>Laporan Keuangan <br>Perusahaan</span>
+            <span class="pull-right-container">
+			<small class="label pull-right 
+				{if $flag.KEUANGAN.sts eq -1}
+				{if $flag.KEUANGAN.jml > 0}bg-green{else}bg-red{/if} 
+				{else}
+					{if $flag.KEUANGAN.sts eq 1}bg-blue
+					{else}bg-yellow
+					{/if}
+				{/if} menu_keuangan">&nbsp;
+			</small>
+            </span>
+          </a>
+        </li>
+		{/if}
+		<li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/modul/surat/main');$('#judul_kecil').html('Data Surat Penting Perusahaan')" flag="SURAT" tabel="drt_surat_penting">
+            <i class="fa fa-database"></i> <span>Surat Penting lainnya</span>
+			
+            <!--span class="pull-right-container">
+			<small class="label pull-right {if $flag.SURAT > 0}bg-green{else}bg-red{/if} menu_surat">&nbsp;</small>
+            </span-->
+          </a>
+        </li>
+		<!--li>
+          <a href="javascript:void(0);" onclick="loadUrl('{$host}modul/get_konten/konfirmasi');$('#judul_kecil').html(' Feedback Panitia')">
+            <i class="fa fa-database"></i> <span>Feedback Panitia</span>
+            <span class="pull-right-container">
+            </span>
+          </a>
+        </li-->
+		<!--li>
+          <a href="{$host}login/logout">
+            <i class="fa fa-dashboard"></i> <span>Logout</span>
+            <span class="pull-right-container">
+			
+            </span>
+          </a>
+        </li-->
+      </ul>
+	</section>

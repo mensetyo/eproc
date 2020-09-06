@@ -1,0 +1,81 @@
+<fieldset>
+	<legend>Form Input Pajak</legend>
+<div class="span10">
+<form class="form-horizontal" id="form_{$acak}" url="{$host}modul/cruddata/{$mod}" method="post" enctype="multipart/form-data">
+<table class="table table-hover">
+		<input type="hidden" name="id" value="{$data.id|default:''}">
+		<input type="hidden" name="sts_crud" value="{$sts_crud|default:'add'}">
+		
+		{include file="template/input_form.html" type='text' label="Jenis Pajak *" id="jenis_pajak" name="jenis_pajak" style_type="width:80%" class="validasi" value="{$data.jenis_pajak|default:''}"}
+		{include file="template/input_form.html" type='text' label="Masa Pajak Tahunan *" id="masa_pajak_tahunan" name="masa_pajak_tahunan" style_type="width:80%" class="validasi" value="{$data.masa_pajak_tahunan|default:''}"}
+		{include file="template/input_form.html" type='text' label="No Bukti Pajak *" id="no_bkti_penerimaan_srt" name="no_bkti_penerimaan_srt" style_type="width:80%" class="validasi" value="{$data.no_bkti_penerimaan_srt|default:''}"}
+		{include file="template/input_form.html" type='text' label="Tgl. Bukti *" id="tgl_bkt_penerimaan_srt" name="tgl_bkt_penerimaan_srt" style_type="width:30%" class="validasi tgl" value="{$data.tgl_bkt_penerimaan_srt|default:''}"}
+		{include file="template/input_form.html" type='file' label="Dokumen (pdf) **" id="dok" name="dok" style_type="width:80%" class="{if $sts_crud|default:'add' eq 'add'}validasi{/if}"}
+		{if $sts_crud|default:'add' eq 'edit'}
+		<tr>
+			<td>&nbsp;</td><td>Last Upload File</td><td>:</td>
+			<td style="font-weight:bold;">
+				<a href="javascript:void(0);" onclick="lihat_file('{$data.dok|default:''}','pajak')">{$data.dok|default:''}</a>
+			</td>
+		</tr>
+		{/if}
+		
+		<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+			<td style="font-weight:bold;">
+				* Data harus diisi<br>
+				** Dokumen yang diupload adalah scan dokumen ASLI (Pdf), Bukan Fotokopi
+			</td>
+		</tr>
+		
+		<!--tr>
+			<td>&nbsp;</td><td>Status</td><td>:</td>
+			<td style="font-weight:bold;">
+				<input type="checkbox" name="flag" value="Y" checked>&nbsp;&nbsp;Aktif
+			</td>
+		</tr-->
+</table>
+	
+</form>
+<div class="control-group">
+	<center>
+	<label class="control-label" for="form-field-1"></label>
+	<div class="controls">
+		{if $masa|default:0 eq 1}
+		{include file="template/button_save.html" id_simpan="simpan_{$mod}" id_batal="batal_{$mod}" }
+		{/if}
+	</div>
+	</center>
+</div>		
+</div>
+</fieldset>
+
+<script>
+	var idx_row={$jml_row|default:1};
+	$(".validasi").validatebox({ required:true }); 
+	$('.tgl').datepicker({
+		 format: 'yyyy-mm-dd',
+		 autoclose: true
+	});
+	$('#batal_{$mod}').click(function(){
+		$('#grid_nya_{$mod}').show();
+		$('#detil_nya_{$mod}').html('').hide();
+	});
+	
+	$('#simpan_{$mod}').click(function(){
+		submit_form('form_{$acak}',function(r){
+			if(r==1){
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Tersimpan",'info');
+				$('#grid_nya_{$mod}').show();
+				$('#detil_nya_{$mod}').html('').hide();
+				$('#grid_{$mod}').datagrid('reload');
+			}else{
+				winLoadingClose();
+				$.messager.alert('EPROC-APP',"Data Gagal Tersimpan",'error');
+				console.log(r);
+			}
+		});
+
+	});
+</script>
