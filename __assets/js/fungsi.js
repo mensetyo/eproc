@@ -311,6 +311,11 @@ function genGrid(modnya, divnya, lebarnya, tingginya){
 				{field:'kapasitas',title:'Kapasitas',width:150, halign:'left',align:'left'},
 				{field:'merk',title:'Merk',width:200, halign:'left',align:'left'},
 				{field:'tahun',title:'Tahun',width:200, halign:'center',align:'center'},
+				{field:'bukti_milik',title:'File',width:200, halign:'left',align:'left',
+					formatter: function(value,row,index){
+						return 	'<a href="javascript:void(0);" onclick="lihat_file(\''+value+'\',\'peralatan\')">'+value+'</a>';
+					}
+				},
 			];
 		break;
 		case "pengalaman":
@@ -1227,7 +1232,7 @@ function lihat_file(file,mod){
 		case "npwp":jdl="Preview File NPWP";path=host+'__repo/pra_daftar/'+file;break;
 		case "siup":jdl="Preview File SIUP";path=host+'__repo/pra_daftar/'+file;break;
 		case "ktp":jdl="Preview File KTP";path=host+'__repo/pra_daftar/'+file;break;
-		case "pkp":jdl="Preview File KTP";path=host+'__repo/pra_daftar/'+file;break;
+		case "pkp":jdl="Preview File PKP";path=host+'__repo/pra_daftar/'+file;break;
 		case "rekening":jdl="Preview File Rekening";path=host+'__repo/pra_daftar/'+file;break;
 		case "akta":jdl="Preview File Akta";path=host+'__repo/akta/'+file;break;
 
@@ -1241,7 +1246,7 @@ function lihat_file(file,mod){
 		case "tdp_reg":jdl="Preview File TDP";path=host+'__repo/tdp/'+file;break;
 		case "pajak":jdl="Preview File Ijin Pajak";path=host+'__repo/pajak/'+file;break;
 		case "ta":jdl="Preview File Ijin Tenaga Ahli";path=host+'__repo/tenaga_ahli/'+file;break;
-		case "peralatan":jdl="Preview File Ijin Tenaga Ahli";path=host+'__repo/peralatan/'+file;break;
+		case "peralatan":jdl="Preview File Peralatan";path=host+'__repo/peralatan/'+file;break;
 		case "pek_berjalan":jdl="Preview File Ijin Pekerjaan Berjalan";path=host+'__repo/pekerjaan_berjalan/'+file;break;
 		case "aspek_keu":jdl="Preview File Ijin Aspek Keuangan";path=host+'__repo/keuangan/'+file;break;
 		case "surat_penting":jdl="Preview File Surat Penting Lain";path=host+'__repo/surat_penting/'+file;break;

@@ -25,7 +25,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr>
+		<tr id="opini_select">
 			<td>&nbsp;</td><td>Opini Auditor</td><td>:</td>
 			<td style="font-weight:bold;">
 				<select name="uraian_2" id="uraian_2" class="form-control validasi" style="width:50%" >
@@ -94,9 +94,11 @@
 	$('#uraian_1').change(function(){
 		if($(this).val()=='Audited'){
 			$('#uraian_2').removeAttr("disabled");
+			$('#opini_select').show();
 			
 		}else{
 			$('#uraian_2').attr("disabled","disabled");
+			$('#opini_select').hide();
 		}
 	})
 	$('#batal_{$mod}').click(function(){
